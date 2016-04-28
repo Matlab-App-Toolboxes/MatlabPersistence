@@ -4,7 +4,7 @@ It follows [maven](https://maven.apache.org/guides/introduction/introduction-to-
 
 ## Setup
 
-- git clone https://github.com/ragavsathish/matlab-simple-archetype.git  <project_name>
+- git clone https://github.com/ragavsathish/matlab-simple-archetype.git  project_name
 - update the project_name in pom.m
 - Go to the project folder and run pom.m from matlab
 
