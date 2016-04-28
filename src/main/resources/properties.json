@@ -1,13 +1,22 @@
 {
-	"props": [
+	"location": [
 		{
-			"key": "value1"
+			"id": "A",
+			"description": "Patch Rig viikki",
+			"local_path": "D:/symphony-repo/calibration-module/src/test/resources/test.h5",
+			"remotepath": ""
 		},
 		{
-			"key": "value2"
+			"id": "B",
+			"description": "Suction Rig viikki",
+			"local_path": "",
+			"remotepath": ""
 		},
 		{
-			"key": "value3"
+			"id": "C",
+			"description": "Patch Rig Aalto",
+			"local_path": "",
+			"remotepath": ""
 		}
 	]
 }

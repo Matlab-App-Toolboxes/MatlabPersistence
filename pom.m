@@ -1,4 +1,4 @@
-project_name = 'matlab-simple-archetype';
+project_name = 'matlab-hdf5-persistence';
 
 addpath(genpath(pwd));
 cp = getClassPath();
