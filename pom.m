@@ -11,5 +11,9 @@ if ~ exist('mmockito', 'dir')
     git clone 'https://github.com/ragavsathish/mmockito.git'
 end
 
+if ~ exist('jsonlab', 'dir') && strcmp(scope, 'test')
+    git clone 'https://github.com/fangq/jsonlab.git'
+end
+
 cd(cp.root)
 
