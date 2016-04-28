@@ -21,18 +21,17 @@ deletePom = @(p) delete(pomPath(p));
 % clone libraries if not exist and delete 'pom.m'
 
 for i = 1:numel(dependecies)
-    d = dependecies(i);
-    
-    if ~ exist(d.name, 'dir')
-        git('clone', d.url);
-        
-        if exist(pomPath(d.name), 'file')
-            deletePom(d.name);
-        end
+  d = dependecies(i);
+
+  if ~ exist(d.name, 'dir')
+    git('clone', d.url);
+
+    if exist(pomPath(d.name), 'file')
+      deletePom(d.name);
     end
+  end
 end
 
 % add new libraries to path
 addpath(genpath(pwd));
 cd(cp.root)
-
