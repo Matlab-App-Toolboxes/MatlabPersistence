@@ -1,20 +1,22 @@
 {
+	"persistence": "persistence.m",
+
 	"location": [
 		{
 			"id": "A",
-			"description": "Patch Rig viikki",
+			"description": "description about hdf5 file",
 			"local_path": "D:/symphony-repo/calibration-module/src/test/resources/test.h5",
 			"remotepath": ""
 		},
 		{
 			"id": "B",
-			"description": "Suction Rig viikki",
+			"description": "description about hdf5 file",
 			"local_path": "",
 			"remotepath": ""
 		},
 		{
 			"id": "C",
-			"description": "Patch Rig Aalto",
+			"description": "description about hdf5 file",
 			"local_path": "",
 			"remotepath": ""
 		}
