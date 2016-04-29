@@ -3,17 +3,23 @@ classdef SimpleEntity < H5Entity
 	properties
 		integers 
 		doubles  
-		string  
+		strings  
 	end
 
 	properties
 		identifier
-		group
+		group = TestPersistence.SIMPLE_ENTITY;
+		schema
 	end
 
 	methods
 		
 		function createSchema(obj)
+            f = fields(obj.schema);
+			if numel(f) ~= sum(ismember(f,  properties(obj)))
+            	% throw exception
+            end
+            obj.createCompundSchema();
 		end
 
 		function getPersistanceData(obj)

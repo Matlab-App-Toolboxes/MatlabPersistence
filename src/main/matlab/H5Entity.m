@@ -5,12 +5,47 @@ classdef H5Entity < handle
         group
     end
     
-    properties(SetAccess = private)
+    properties(SetAccess = protected)
         queryPath
     end
     
     methods
         
+        function sz = getH5Size(obj)
+            sz = ones(1, n);
+            
+            for i = 1 : n
+                h5DataType = schema.(fields{i});
+
+                switch h5DataType
+                    
+                    case H5DataType.DOUBLE_GROUP
+                        doubleType = H5T.copy('H5T_NATIVE_DOUBLE');
+                        sz(i)= H5T.get_size(doubleType);
+                    
+                    case H5DataType.INTEGER_GROUP
+                        intType = H5T.copy('H5T_NATIVE_INT');
+                        sz(i)= H5T.get_size(intType);
+                end
+            end
+        end
+
+        function createCompoundSchema(obj)
+
+            fields = fields(obj.schema);
+            n = numel(fields)
+            sz = obj.getH5Size();
+            
+            offset(1) = 0;
+            offset(2 : n) = cumsum(sz(1 : n-1));
+            filetype = H5T.create ('H5T_COMPOUND', sum(sz));
+            
+            for i = 1 : n
+                h5DataType = obj.schema.(fields{i});
+                H5T.insert(filetype, fields{i}, offset(i), h5DataType.type);
+            end
+        end
+
         function prepareQuery(obj, queryPathHandle)
             obj.queryPath = @(fname) strcat(obj.group.toPath(), queryPathHandle(fname));
         end
@@ -23,7 +58,7 @@ classdef H5Entity < handle
     
     methods(Abstract)
         createSchema(obj)
-        getPersistanceData(obj);
+        getPersistanceData(obj)
         setQueryResponse(obj, rdata, n)
     end
 end

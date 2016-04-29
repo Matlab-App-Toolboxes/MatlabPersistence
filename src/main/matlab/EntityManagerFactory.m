@@ -29,7 +29,7 @@ classdef EntityManagerFactory < handle
          
             if isempty(obj.fname)
                 msgID = 'Invalid File';
-                msg = 'Unable to find File present in properties.json';
+                msg = 'Unable to find File present in h5properties.json';
                 throw (MException(msgID, msg));
             end
             em = H5EntityManager(obj.fname, obj.persistence);
