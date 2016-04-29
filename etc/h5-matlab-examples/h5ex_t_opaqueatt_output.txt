@@ -1,0 +1,42 @@
+
+*******************************
+*  Output of h5ex_t_opaqueatt   *
+*******************************
+
+Datatype tag for DS1 is: "Character array"
+A1[1]: OPAQUE1
+A1[2]: OPAQUE2
+A1[3]: OPAQUE3
+A1[4]: OPAQUE4
+
+
+
+*******************************
+*  Output of h5dump           *
+*******************************
+
+HDF5 "h5ex_t_opaqueatt.h5" {
+GROUP "/" {
+   DATASET "DS1" {
+      DATATYPE  H5T_STD_I32LE
+      DATASPACE  SCALAR
+      DATA {
+      (0): 0
+      }
+      ATTRIBUTE "A1" {
+         DATATYPE  
+            H5T_OPAQUE;
+            OPAQUE_TAG "Character array";
+         
+         DATASPACE  SIMPLE { ( 4 ) / ( 4 ) }
+         DATA {
+         (0): 4f:50:41:51:55:45:31, 4f:50:41:51:55:45:32,
+         (2): 4f:50:41:51:55:45:33, 4f:50:41:51:55:45:34
+         }
+      }
+   }
+}
+}
+
+
+

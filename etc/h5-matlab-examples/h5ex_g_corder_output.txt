@@ -1,0 +1,39 @@
+
+*******************************
+*  Output of h5ex_g_corder   *
+*******************************
+
+Traversing group using alphabetical indices:
+Index 1: 5
+Index 2: D
+Index 3: F
+Index 4: H
+Traversing group using creation order indices:
+Index 1: H
+Index 2: D
+Index 3: F
+Index 4: 5
+
+
+
+*******************************
+*  Output of h5dump           *
+*******************************
+
+HDF5 "h5ex_g_corder.h5" {
+GROUP "/" {
+   GROUP "index_group" {
+      GROUP "5" {
+      }
+      GROUP "D" {
+      }
+      GROUP "F" {
+      }
+      GROUP "H" {
+      }
+   }
+}
+}
+
+
+

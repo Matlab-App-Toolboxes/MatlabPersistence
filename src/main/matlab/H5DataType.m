@@ -16,8 +16,8 @@ classdef H5DataType
 			obj.type = type;
 		end
 
-		function str = toStr(obj)
-			str = ['"' char(obj) '"'];
+		function str = map(obj, property)
+			str = ['"' property '" : "' char(obj) '" ,'];
 		end
 	end
 end

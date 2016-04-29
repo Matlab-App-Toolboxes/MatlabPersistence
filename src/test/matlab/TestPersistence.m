@@ -2,11 +2,11 @@ classdef TestPersistence
 
     enumeration
     	
-    	SIMPLE_ENTITY([ '{' ...
-    		' "integers" : ' H5DataType.INTEGER_GROUP.toStr() ...
-    		', "doubles" : ' H5DataType.DOUBLE_GROUP.toStr()....
-    		', "strings" : ' H5DataType.STRING_GROUP.toStr() ...
-    		'}' ])
+    	SIMPLE_ENTITY([...
+    		H5DataType.INTEGER_GROUP.map('integers') ...
+            H5DataType.DOUBLE_GROUP.map('doubles') ...
+            H5DataType.STRING_GROUP.map('strings') ... 	
+            ])
     end
     
     properties
@@ -15,8 +15,8 @@ classdef TestPersistence
     
     methods
 
-        function obj = TestPersistence(jsonSchema)
-        	obj.schema = loadjson(jsonSchema);
+        function obj = TestPersistence(str)
+        	obj.schema = loadjson(['{' str(1 : end -1) '}']);
     	end
     end
 end

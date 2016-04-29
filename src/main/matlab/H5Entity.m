@@ -11,7 +11,10 @@ classdef H5Entity < handle
     
     methods
         
-        function sz = getH5Size(obj)
+        function sz = getH5Size(obj, schema)
+
+            fields = fields(schema);
+            n = numel(fields)
             sz = ones(1, n);
             
             for i = 1 : n
@@ -30,18 +33,16 @@ classdef H5Entity < handle
             end
         end
 
-        function createCompoundSchema(obj)
+        function createSchema(obj)
 
-            fields = fields(obj.schema);
-            n = numel(fields)
-            sz = obj.getH5Size();
-            
+            schema = obj.schema;
+            sz = obj.getH5Size(schema);
             offset(1) = 0;
             offset(2 : n) = cumsum(sz(1 : n-1));
             filetype = H5T.create ('H5T_COMPOUND', sum(sz));
             
             for i = 1 : n
-                h5DataType = obj.schema.(fields{i});
+                h5DataType = schema.(fields{i});
                 H5T.insert(filetype, fields{i}, offset(i), h5DataType.type);
             end
         end
@@ -57,7 +58,6 @@ classdef H5Entity < handle
     end
     
     methods(Abstract)
-        createSchema(obj)
         getPersistanceData(obj)
         setQueryResponse(obj, rdata, n)
     end
