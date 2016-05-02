@@ -1,5 +1,5 @@
 {
-	"persistence": "persistence.m",
+	"persistence": "TestPersistence",
 
 	"location": [
 		{

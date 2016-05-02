@@ -1,11 +1,11 @@
 {
-	"persistence": "test-persistence.m",
+	"persistence": "TestPersistence",
 
 	"location": [
 		{
 			"id": "A",
 			"description": "description about hdf5 file",
-			"local_path": "D:/symphony-repo/calibration-module/src/test/resources/test.h5",
+			"local_path": "src/test/resources/test.h5",
 			"remotepath": ""
 		},
 		{
