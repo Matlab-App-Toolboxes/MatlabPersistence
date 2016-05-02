@@ -12,7 +12,7 @@ function obj = createEntityManager(id, h5properties)
     [entity, description] = enumeration(persistenceClass);
     entityMap = containers.Map();
     for i = 1 :numel(entity)
-        entityMap(description{i}) = entity;
+        entityMap(description{i}) = entity(i);
     end
 
     obj = io.mpa.EntityManagerFactory(fileProperties, persistenceClass).create(id, entityMap);

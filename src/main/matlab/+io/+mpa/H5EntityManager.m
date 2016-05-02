@@ -12,12 +12,12 @@ classdef H5EntityManager < handle
             obj.entityMap = entityMap;
         end
         
-        function create(obj)
+        function createFile(obj)
             file = H5F.create(obj.fname, 'H5F_ACC_TRUNC', 'H5P_DEFAULT', 'H5P_DEFAULT');
             
             e = values(obj.entityMap);
             for i = 1:numel(e)
-                group = H5G.create(file, e(i).toPath(), 0);
+                group = H5G.create(file, e{i}.toPath(), 0);
                 H5G.close(group);
             end
             H5F.close(file);
@@ -31,7 +31,7 @@ classdef H5EntityManager < handle
             end
             
             if ~ exist(obj.fname, 'file')
-                obj.createFile(obj.fname)
+                obj.createFile();
             end
             
             [data, size] = h5Entity.toStructure(schema);
@@ -59,12 +59,12 @@ classdef H5EntityManager < handle
             end
             
             if ~ exist(obj.fname, 'file')
-                obj.createFile(obj.fname)
+                obj.createFile();
             end
             
             [data, size] =  h5Entity.toStructure(schema);
             memtype = obj.createH5Types(schema);
-            
+
             file = H5F.open(obj.fname, 'H5F_ACC_RDWR','H5P_DEFAULT');
             space = H5S.create ('H5S_SCALAR');
             group = H5G.create(file, h5Entity.group, 0);
@@ -151,43 +151,56 @@ classdef H5EntityManager < handle
             end
         end
         
-        function insertSimpleAttribute(obj, h5Entity)
+        function insertSimpleAttributes(obj, h5Entity)
             schema = h5Entity.getSchema(io.mpa.H5DataClass.SIMPLE_ATTR);
+            
+            if ~ exist(obj.fname, 'file')
+                obj.createFile();
+            end            
             
             if isempty(schema)
                 return;
             end
-            cols = fields(schema);
+            [data, size] =  h5Entity.toStructure(schema);
+            props = fields(data);
+
+            path = h5Entity.group ;
+            file = H5F.open(obj.fname, 'H5F_ACC_RDWR','H5P_DEFAULT');
+            group = H5G.create(file, path, 0);
+            H5G.close(group);
+            H5F.close(file);
             
-            for i = 1:numel(cols)
-                h5writeatt(obj.fname, [h5Entity.group '/' h5Entity.identifier], cols{i}, schema.cols{i});
+            % ToDo rewrite h5writeatt to core librarires
+            for i = 1:numel(props)
+                h5writeatt(obj.fname, path, props{i}, data.(props{i}));
             end
         end
         
-        function findSimpleAttribute(obj, h5Entity)
+        function findSimpleAttributes(obj, h5Entity)
             schema = h5Entity.getSchema(io.mpa.H5DataClass.SIMPLE_ATTR);
             
             if isempty(schema)
                 return;
             end
-            cols = fields(schema);
-            
-            for i = 1:numel(cols)
-                rdata.(cols{i}) = h5readatt(obj.fname, [h5Entity.group '/' h5Entity.identifier], cols{i});
+            props = fields(schema);
+
+            % ToDo rewrite h5readatt to core librarires
+            for i = 1:numel(props)
+                rdata.(props{i}) = h5readatt(obj.fname, h5Entity.group , props{i});
             end
-            h5Entity.setQueryResponse(rdata, length(rdata.(cols{1})));
+            h5Entity.setQueryResponse(rdata, length(rdata.(props{1})));
         end
         
         function persist(obj, h5Entity)
             obj.insertCompoundDataSet(h5Entity);
             obj.insertCompoundAttributes(h5Entity);
-            obj.insertSimpleAttribute(h5Entity);
+            obj.insertSimpleAttributes(h5Entity);
         end
         
         function find(obj, h5Entity)
             obj.findCompoundDataSet(h5Entity);
             obj.findCompoundAttributes(h5Entity);
-            obj.findSimpleAttribute(h5Entity);
+            obj.findSimpleAttributes(h5Entity);
         end
     end
 end

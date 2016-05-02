@@ -9,7 +9,7 @@ classdef H5DataType < handle
         COMPOUND_STRING_ATTR(@()H5T.copy ('H5T_C_S1'), io.mpa.H5DataClass.COMPOUND_ATTR)
         COMPOUND_DOUBLE_ATTR(@()H5T.copy('H5T_NATIVE_DOUBLE'), io.mpa.H5DataClass.COMPOUND_ATTR)
         
-        SIMP_INTEGER_ATTR([], io.mpa.H5DataClass.SIMPLE_ATTR)
+        SIMPLE_INTEGER_ATTR([], io.mpa.H5DataClass.SIMPLE_ATTR)
         SIMPLE_STRING_ATTR([],  io.mpa.H5DataClass.SIMPLE_ATTR)
         SIMPLE_DOUBLE_ATTR([],  io.mpa.H5DataClass.SIMPLE_ATTR)
     end
