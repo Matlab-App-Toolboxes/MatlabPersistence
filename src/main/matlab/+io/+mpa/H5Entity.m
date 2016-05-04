@@ -6,6 +6,11 @@ classdef H5Entity < handle
         finalSchema
     end
     
+    properties
+        isGroupCreated = false;
+        isIdentifierCreated = false;
+    end
+    
     methods
         
         function s = getSchema(obj, targetH5DataClass)
@@ -28,9 +33,12 @@ classdef H5Entity < handle
             end
             size = length(obj.(props{1}));
         end
-    end
-    
-    methods(Abstract)
-         setQueryResponse(obj, rdata, dims);
+        
+        function setQueryResponse(obj, rdata, schema)
+            props = fields(schema);
+            for i = 1:numel(props)
+                obj.(props{i}) = rdata.(props{i});
+            end
+        end
     end
 end

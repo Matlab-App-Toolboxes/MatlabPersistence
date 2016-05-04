@@ -28,7 +28,7 @@ classdef H5EntityManagerTest < matlab.unittest.TestCase
         
         function methodTeardown(obj)
             if exist(obj.entityManager.fname, 'file')
-                delete(obj.entityManager.fname);
+                %delete(obj.entityManager.fname);
             end
         end
     end
