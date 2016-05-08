@@ -1,14 +1,14 @@
-# Matlab HD5 Persistance
+# Matlab HD5 Persistence
 
-The Matlab HD5 Persistance is used for 
+The Matlab HD5 Persistence is used for 
 	- accessing
 	- persisting
 	- managing 
 	- data between Matlab objects / structures and a HDF5 file
 
-It tries to mimick [Java Persistence API](http://openjpa.apache.org/builds/1.2.3/apache-openjpa/docs/jpa_overview_arch.html) functionality. It follows [maven](https://maven.apache.org/) build life cycle customized for matlab. Sample matlab maven archetype can be found in [link](https://github.com/ragavsathish/matlab-simple-archetype). 
+It tries to mimic [Java Persistence API](http://openjpa.apache.org/builds/1.2.3/apache-openjpa/docs/jpa_overview_arch.html) functionality. It follows [maven](https://maven.apache.org/) build life cycle customized for matlab. Sample matlab maven archetype can be found in [link](https://github.com/ragavsathish/matlab-simple-archetype). 
 
-Dependcies are lookup from [jitpack.io](https://jitpack.io) 
+Dependencies are lookup from [jitpack.io](https://jitpack.io) 
 
 ## Usage instructions 
 
