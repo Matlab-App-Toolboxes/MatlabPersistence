@@ -11,8 +11,8 @@ classdef H5EntityManagerTest < matlab.unittest.TestCase
     
     methods
         function obj = H5EntityManagerTest()
-            cp = getClassPath();
-            h5Properties = [cp.test_resources 'test-h5properties.json'];
+            
+            h5Properties = which('test-h5properties.json');
             obj.entityManager =  io.mpa.persistence.createEntityManager(obj.ID, h5Properties);
         end
     end
