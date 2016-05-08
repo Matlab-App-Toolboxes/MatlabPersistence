@@ -8,13 +8,13 @@ The Matlab HD5 Persistence is used for
 
 It tries to mimic [Java Persistence API](http://openjpa.apache.org/builds/1.2.3/apache-openjpa/docs/jpa_overview_arch.html) functionality. It follows [maven](https://maven.apache.org/) build life cycle customized for matlab. Sample matlab maven archetype can be found in [link](https://github.com/ragavsathish/matlab-simple-archetype). 
 
-Dependencies are lookup from [jitpack.io](https://jitpack.io) 
+Dependencies are looked up from [jitpack.io](https://jitpack.io) 
 
 ## Usage instructions 
 
 1. Create customized MyPersistence.m which inherits from io.matlab.persistence
 	
-	```
+	```matlab
 	classdef MyPersistence < io.mpa.Persistence
 	    enumeration
 	    end
@@ -22,7 +22,7 @@ Dependencies are lookup from [jitpack.io](https://jitpack.io)
 	```
 2. To add simple attribute based HDF mapping follow below where __SIMPLE_ENTITY_ATTR__ is group in hdf5 file
 
-	```	
+	```matlab	
 	classdef MyPersistence < io.mpa.Persistence
 	    enumeration
 
@@ -36,7 +36,7 @@ Dependencies are lookup from [jitpack.io](https://jitpack.io)
 
 3. Associate Mypersistence.m with Entity classes
 
-	```
+	```matlab
 	classdef SimpleEntityAttr < io.mpa.H5Entity
 	    
 	    properties
@@ -60,7 +60,7 @@ Dependencies are lookup from [jitpack.io](https://jitpack.io)
 	```
 4. Create h5properties.json to describe about location of hdf file and unique identifier.
 	
-	```
+	```json
 
 	{
 		"persistence": "Mypersistence",
@@ -78,7 +78,7 @@ Dependencies are lookup from [jitpack.io](https://jitpack.io)
 
 6. To persist (or) save a class of value into HDF5 attributes with group path being __SIMPLE_ENTITY_ATTR__.
 
-	```
+	```matlab
 		em = obj.entityManager;
         entity = SimpleEntityAttr('simple');
         entity.integer = int32(10);
@@ -90,8 +90,8 @@ Dependencies are lookup from [jitpack.io](https://jitpack.io)
 
 7. To query from hdf5 for path 	__SIMPLE_ENTITY_ATTR__.
 
-	``` 
+	```matlab
 		entity = SimpleEntityAttr('simple');
 		em.find(entity);
-		
+
 	```
