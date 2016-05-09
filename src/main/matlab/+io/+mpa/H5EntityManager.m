@@ -181,7 +181,7 @@ classdef H5EntityManager < handle
             props = fields(data);
             path = h5Entity.group ;
             file = H5F.open(obj.fname, 'H5F_ACC_RDWR','H5P_DEFAULT');
-           
+            
             if ~ h5Entity.isGroupCreated
                 group = H5G.create(file, h5Entity.group, 0);
                 h5Entity.isGroupCreated = true;

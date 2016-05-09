@@ -10,7 +10,7 @@ classdef SimpleEntityAttr < io.mpa.H5Entity
     
     properties
         group
-        finalSchema
+        entityId = TestPersistence.SIMPLE_ENTITY_ATTR
     end
     
     methods
@@ -20,11 +20,7 @@ classdef SimpleEntityAttr < io.mpa.H5Entity
         end
         
         function group = get.group(obj)
-            group = [TestPersistence.SIMPLE_ENTITY_ATTR.toPath() date];
-        end
-        
-        function s = get.finalSchema(obj)
-            s = TestPersistence.SIMPLE_ENTITY_ATTR.schema;
+            group = [obj.entityId.toPath() date];
         end
     end
 end

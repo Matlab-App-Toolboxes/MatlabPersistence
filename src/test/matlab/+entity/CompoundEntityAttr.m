@@ -10,7 +10,7 @@ classdef CompoundEntityAttr < io.mpa.H5Entity
 
 	properties
 		group
-		finalSchema 
+        entityId = TestPersistence.COMPUND_ENTITY_ATTR
 	end
 
 	methods
@@ -20,11 +20,7 @@ classdef CompoundEntityAttr < io.mpa.H5Entity
         end
         
         function group = get.group(obj)
-             group = [TestPersistence.COMPUND_ENTITY_ATTR.toPath() date];
-        end
-        
-        function s = get.finalSchema(obj)
-            s = TestPersistence.COMPUND_ENTITY_ATTR.schema;
+            group = [obj.entityId.toPath() date];
         end
     end
 end

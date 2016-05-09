@@ -2,13 +2,14 @@ classdef H5Entity < handle
     
     properties(Abstract)
         identifier
+        entityId
         group
-        finalSchema
     end
     
     properties
         isGroupCreated = false;
         isIdentifierCreated = false;
+        finalSchema
     end
     
     methods
@@ -25,9 +26,9 @@ classdef H5Entity < handle
         end
         
         function [data, size] = toStructure(obj, schema)
-    
+            
             props = fields(schema);
-
+            
             for i = 1:numel(props)
                 data.(props{i}) = obj.(props{i});
             end
@@ -39,6 +40,10 @@ classdef H5Entity < handle
             for i = 1:numel(props)
                 obj.(props{i}) = rdata.(props{i});
             end
+        end
+        
+        function s = get.finalSchema(obj)
+            s = obj.entityId.schema;
         end
     end
 end

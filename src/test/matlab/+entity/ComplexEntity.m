@@ -19,7 +19,7 @@ classdef ComplexEntity < io.mpa.H5Entity
     
     properties
         group
-        finalSchema
+        entityId = TestPersistence.COMPLEX_ENTITY
     end
 
     methods
@@ -29,11 +29,7 @@ classdef ComplexEntity < io.mpa.H5Entity
         end
         
         function group = get.group(obj)
-            group = [TestPersistence.COMPLEX_ENTITY.toPath() date];
-        end
-        
-        function s = get.finalSchema(obj)
-            s = TestPersistence.COMPLEX_ENTITY.schema;
+            group = [obj.entityId.toPath() date];
         end
     end
 end
