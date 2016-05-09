@@ -4,7 +4,7 @@ classdef CompoundEntityAttr < io.mpa.H5Entity
 		integers 
 		doubles  
 		strings
-		id  
+		  
         identifier
 	end
 

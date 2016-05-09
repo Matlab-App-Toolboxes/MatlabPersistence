@@ -4,7 +4,7 @@ classdef SimpleEntityAttr < io.mpa.H5Entity
         integer
         double
         string
-        id
+        
         identifier
     end
     

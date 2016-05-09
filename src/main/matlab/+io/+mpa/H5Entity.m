@@ -23,6 +23,10 @@ classdef H5Entity < handle
             indices = cellfun(@(p) isH5DataClassEq(s.(p)), props);
             
             s = rmfield(s, props(~indices));
+            
+            if isempty(fieldnames(s))
+                s= [];
+            end
         end
         
         function [data, size] = toStructure(obj, schema)

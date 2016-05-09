@@ -12,8 +12,7 @@ classdef ComplexEntity < io.mpa.H5Entity
         integersAttr
         doublesAttr
         stringsAttr
-        
-        id
+
         identifier
     end
     
