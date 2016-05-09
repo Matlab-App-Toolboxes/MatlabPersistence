@@ -1,8 +1,7 @@
 function obj = createEntityManager(id, h5properties)
 
-    cp = getClassPath();
     if nargin < 2
-        h5properties = [cp.resources 'h5properties.json'];
+        h5properties = which('h5properties.json');
     end
 
     json = loadjson(h5properties);
