@@ -16,7 +16,7 @@ classdef H5Entity < handle
         
         function s = getSchema(obj, targetH5DataClass)
             import io.mpa.*;
-            s = obj.finalSchema;
+            s = obj.getFinalSchema();
             props = fields(s);
             
             isH5DataClassEq = @(str)(isequal(H5DataType.(str).class, targetH5DataClass));
@@ -46,7 +46,7 @@ classdef H5Entity < handle
             end
         end
         
-        function s = get.finalSchema(obj)
+        function s = getFinalSchema(obj)
             s = obj.entityId.schema;
         end
     end
