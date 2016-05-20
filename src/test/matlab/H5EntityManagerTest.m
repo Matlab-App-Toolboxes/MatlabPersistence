@@ -124,6 +124,42 @@ classdef H5EntityManagerTest < matlab.unittest.TestCase
             obj.verifyEqual(actual.doubles, expected.doubles);
             obj.verifyEqual(actual.strings, expected.strings);
         end
+        
+        function testExecuteQuery(obj)
+            em = obj.entityManager;
+            expected = entity.SimpleEntityAttr('simple_entity_one');
+            expected.integer = int32(10);
+            expected.double = 5.1;
+            expected.string = 'abc';
+            expected.dateString = '19-May-2016';
+            em.persist(expected);
+            
+            expected = entity.SimpleEntityAttr('simple_entity_two');
+            expected.integer = int32(10);
+            expected.double = 5.1;
+            expected.string = 'abc';
+            expected.dateString = '18-May-2016';
+            em.persist(expected);
+            
+            expected = entity.SimpleEntityAttr('simple_entity_three');
+            expected.integer = int32(10);
+            expected.double = 5.1;
+            expected.string = 'def';
+            expected.dateString = '17-May-2016';
+            em.persist(expected);
+            
+            actual = entity.SimpleEntityAttr('simple_entity');
+            query = actual.getAllKeys();
+            result = em.executeQuery(query);
+            obj.verifyEqual(result, {'17-May-2016'; '18-May-2016'; '19-May-2016'});
+            
+            actual.dateString = result{1};
+            em.find(actual);
+            
+            obj.verifyEqual(actual.integer, expected.integer);
+            obj.verifyEqual(actual.double, expected.double);
+            obj.verifyEqual(actual.string, expected.string);
+        end
     end
 end
 
