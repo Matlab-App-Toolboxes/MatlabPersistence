@@ -6,7 +6,7 @@ classdef EntityManagerFactory < handle
     end
     
     methods
-
+        
         function obj = EntityManagerFactory(fileProperties, persistenceClass)
             obj.fileProperties = fileProperties;
             obj.persistenceClass = persistenceClass;
@@ -20,7 +20,7 @@ classdef EntityManagerFactory < handle
                     break;
                 end
             end
-         
+            
             if isempty(fname)
                 msgID = 'Invalid File';
                 msg = 'Unable to find File present in h5properties.json';

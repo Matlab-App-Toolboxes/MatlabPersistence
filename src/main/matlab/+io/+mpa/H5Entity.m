@@ -8,7 +8,6 @@ classdef H5Entity < handle
     properties
         isGroupCreated = false;
         isIdentifierCreated = false;
-        isDynamicSchema = false;
         finalSchema
         identifier
     end
@@ -53,7 +52,7 @@ classdef H5Entity < handle
         function s = get.finalSchema(obj)
             s = obj.finalSchema;
         end
-
+        
         function prePersist(obj)
             obj.finalSchema = obj.entityId.schema;
         end
