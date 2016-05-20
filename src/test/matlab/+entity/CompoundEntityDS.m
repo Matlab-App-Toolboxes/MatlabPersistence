@@ -4,8 +4,6 @@ classdef CompoundEntityDS < io.mpa.H5Entity
         integers
         doubles
         strings
-        
-        identifier
     end
     
     properties
@@ -16,7 +14,7 @@ classdef CompoundEntityDS < io.mpa.H5Entity
     methods
         
         function obj = CompoundEntityDS(id)
-            obj.identifier = id;
+            obj = obj@io.mpa.H5Entity(id);
         end
         
         function group = get.group(obj)

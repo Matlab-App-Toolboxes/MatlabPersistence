@@ -4,8 +4,6 @@ classdef SimpleEntityAttr < io.mpa.H5Entity
         integer
         double
         string
-        
-        identifier
     end
     
     properties
@@ -16,11 +14,19 @@ classdef SimpleEntityAttr < io.mpa.H5Entity
     methods
         
         function obj = SimpleEntityAttr(id)
-            obj.identifier = id;
+            obj = obj@io.mpa.H5Entity(id);
         end
         
         function group = get.group(obj)
             group = [obj.entityId.toPath() date];
+        end
+        
+        function queryHandle = getAllKeys(obj)
+            queryHandle = @(name) resultSet(h5info(name, obj.entityId.toPath()));
+            
+            function result = resultSet(info)
+                result = arrayfun(@(g) g.name, info.Groups);
+            end
         end
     end
 end

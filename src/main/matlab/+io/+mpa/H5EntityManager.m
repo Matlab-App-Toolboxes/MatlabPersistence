@@ -213,17 +213,30 @@ classdef H5EntityManager < handle
             end
             h5Entity.setQueryResponse(rdata, schema);
         end
-        
+       
+       
         function persist(obj, h5Entity)
+            h5Entity.prePersist();           
+            
             obj.insertCompoundDataSet(h5Entity);
             obj.insertCompoundAttributes(h5Entity);
             obj.insertSimpleAttributes(h5Entity);
+            
+            h5Entity.postPersist();  
         end
         
         function find(obj, h5Entity)
+            h5Entity.preFind();         
+            
+            obj.findSimpleAttributes(h5Entity);
             obj.findCompoundDataSet(h5Entity);
             obj.findCompoundAttributes(h5Entity);
-            obj.findSimpleAttributes(h5Entity);
+            
+            h5Entity.postFind(); 
+        end
+        
+        function result = executeQuery(obj, query)
+            result = query(obj.fname);
         end
     end
 end
