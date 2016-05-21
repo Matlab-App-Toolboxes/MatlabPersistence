@@ -45,6 +45,12 @@ classdef H5EntityManager < handle
                 dset = H5D.create(group, h5Entity.identifier, memtype, space, 'H5P_DEFAULT');
                 h5Entity.isGroupCreated = true;
                 h5Entity.isIdentifierCreated = true;
+                
+            elseif ~ h5Entity.isIdentifierCreated
+                 group = H5G.open(file, h5Entity.group, 0);
+                 dset = H5D.create(group, h5Entity.identifier, memtype, space, 'H5P_DEFAULT');
+                 h5Entity.isIdentifierCreated = true;
+                 
             else
                 group = H5G.open(file, h5Entity.group, 0);
                 dset = H5D.open(group, h5Entity.identifier, 'H5P_DEFAULT');
@@ -81,6 +87,12 @@ classdef H5EntityManager < handle
                 
                 h5Entity.isGroupCreated = true;
                 h5Entity.isIdentifierCreated = true;
+                
+            elseif ~ h5Entity.isIdentifierCreated
+                group = H5G.open(file, h5Entity.group, 0);
+                dset = H5D.create(group, h5Entity.identifier, 'H5T_STD_I32LE', space, 'H5P_DEFAULT');
+                h5Entity.isIdentifierCreated = true;
+                
             else
                 group = H5G.open(file, h5Entity.group, 0);
                 dset = H5D.open(group, h5Entity.identifier, 'H5P_DEFAULT');
@@ -185,7 +197,6 @@ classdef H5EntityManager < handle
             if ~ h5Entity.isGroupCreated
                 group = H5G.create(file, h5Entity.group, 0);
                 h5Entity.isGroupCreated = true;
-                h5Entity.isIdentifierCreated = true;
             else
                 group = H5G.open(file, h5Entity.group, 0);
             end
