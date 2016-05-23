@@ -10,6 +10,42 @@ It tries to mimic [Java Persistence API](http://openjpa.apache.org/builds/1.2.3/
 
 Dependencies are looked up from [jitpack.io](https://jitpack.io) 
 
+## Development
+
+1. Download and install maven from [Apache maven](https://maven.apache.org/index.html)
+2. Make sure ```  mvn -verison ``` gives the jdk and maven path
+3. git clone https://github.com/ragavsathish/matlab-hdf5-persistence.git
+4. cd matlab-hdf5-persistence
+5. ``` mvn clean compile ``` should download necessary dependency. 
+
+We are good to go with developemet 
+
+## Dependency Information
+
+1. Add the JitPack repository to your build file
+
+```
+	<repositories>
+		<repository>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+```
+
+2. Add the dependency
+
+<mpa.version>2f8dea9523</mpa.version>
+```
+
+	<dependency>
+	    <groupId>com.github.ragavsathish</groupId>
+	    <artifactId>matlab-hdf5-persistence</artifactId>
+	    <version>${mpa.version}</version>
+	</dependency>
+
+```
+
 ## Usage instructions 
 
 1. Create customized MyPersistence.m which inherits from io.matlab.persistence
@@ -20,7 +56,7 @@ Dependencies are looked up from [jitpack.io](https://jitpack.io)
 	    end
 	end
 	```
-2. To add simple attribute based HDF mapping follow below where __SIMPLE_ENTITY_ATTR__ is group in hdf5 file
+2. To add __SIMPLE_ENTITY_ATTR__  as attribute group in HDF.
 
 	```matlab	
 	classdef MyPersistence < io.mpa.Persistence
@@ -34,31 +70,31 @@ Dependencies are looked up from [jitpack.io](https://jitpack.io)
 
 	```
 
-3. Associate Mypersistence.m with Entity classes
+3. Link MyPersistence.SIMPLE_ENTITY_ATTR to entity class
 
 	```matlab
 	classdef SimpleEntityAttr < io.mpa.H5Entity
 	    
 	    properties
-	      	entityIdentifier = MyPersistence.SIMPLE_ENTITY_ATTR
+	    	group
+	      	entityId = MyPersistence.SIMPLE_ENTITY_ATTR
 	    end
 
 	    properties
 	    	integer
 	    	string
 	    	double
-	    	identifier
 	    end
 	   
 	    methods
 	        
 	        function obj = SimpleEntityAttr(id)
-	            obj.identifier = id;
+	            obj = obj@io.mpa.H5Entity(id);
 	        end
 	    end
 	end
 	```
-4. Create h5properties.json to describe about location of hdf file and unique identifier.
+4. Create h5properties.json to describe about location of hdf file with some unique identifier.
 	
 	```json
 
@@ -73,10 +109,11 @@ Dependencies are looked up from [jitpack.io](https://jitpack.io)
 				"remotepath": ""
 			}
 	}
+
 	```
 5. Create an entity manager instance ``` entityManager =  io.mpa.persistence.createEntityManager("some_id", "h5properties.json"); ```
 
-6. To persist (or) save a class of value into HDF5 attributes with group path being __SIMPLE_ENTITY_ATTR__.
+6. To persist (or) save a class of value into HDF5 attributes 
 
 	```matlab
 		em = obj.entityManager;
@@ -88,7 +125,7 @@ Dependencies are looked up from [jitpack.io](https://jitpack.io)
         em.persist(entity);
 	``` 
 
-7. To query from hdf5 for path 	__SIMPLE_ENTITY_ATTR__.
+7. To query hdf5 from path 	__SIMPLE_ENTITY_ATTR__.
 
 	```matlab
 		entity = SimpleEntityAttr('simple');
