@@ -35,9 +35,9 @@ We are good to go with developemet
 
 2. Add the dependency
 
-<mpa.version>2f8dea9523</mpa.version>
-```
+``` <mpa.version>2f8dea9523</mpa.version> ````
 
+```
 	<dependency>
 	    <groupId>com.github.ragavsathish</groupId>
 	    <artifactId>matlab-hdf5-persistence</artifactId>
