@@ -21,9 +21,7 @@ Dependencies are looked up from [jitpack.io](https://jitpack.io)
 We are good to go with developemet 
 
 ## Dependency Information
-
-1. Add the JitPack repository to your build file
-
+-  Add the JitPack repository to your build file
 ```
 	<repositories>
 		<repository>
@@ -32,9 +30,7 @@ We are good to go with developemet
 		</repository>
 	</repositories>
 ```
-
-2. Add the dependency
-
+- Add the dependency
 ``` <mpa.version>2f8dea9523</mpa.version> ```
 
 ```
@@ -45,4 +41,8 @@ We are good to go with developemet
 	</dependency>
 
 ```
+## Usage Instructions 
+
+[Wiki](https://github.com/ragavsathish/matlab-hdf5-persistence/wiki)
+
 License MIT
