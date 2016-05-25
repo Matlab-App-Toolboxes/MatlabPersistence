@@ -1,4 +1,4 @@
-classdef (Abstract)Persistence< handle
+classdef (Abstract)Schema< handle
     
     properties
         schema
@@ -6,7 +6,7 @@ classdef (Abstract)Persistence< handle
     
     methods
         
-        function obj = Persistence(str)
+        function obj = Schema(str)
             obj.schema = loadjson(['{' str(1 : end -1) '}']);
         end
         

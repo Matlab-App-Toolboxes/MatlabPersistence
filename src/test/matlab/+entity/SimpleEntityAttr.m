@@ -9,7 +9,7 @@ classdef SimpleEntityAttr < io.mpa.H5Entity
     
     properties
         group
-        entityId = TestPersistence.SIMPLE_ENTITY_ATTR
+        entityId = TestSchema.SIMPLE_ENTITY_ATTR
     end
     
     methods

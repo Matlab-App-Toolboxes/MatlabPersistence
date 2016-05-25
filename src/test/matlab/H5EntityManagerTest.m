@@ -13,7 +13,7 @@ classdef H5EntityManagerTest < matlab.unittest.TestCase
         function obj = H5EntityManagerTest()
             
             h5Properties = which('test-h5properties.json');
-            obj.entityManager =  io.mpa.persistence.createEntityManager(obj.ID, h5Properties);
+            obj.entityManager =  io.mpa.factory.createEntityManager(obj.ID, h5Properties);
         end
     end
     
@@ -38,9 +38,6 @@ classdef H5EntityManagerTest < matlab.unittest.TestCase
         function testCreateEntityManager(obj)
             em = obj.entityManager;
             obj.verifyNotEmpty(em.fname);
-            [e, d] = enumeration('TestPersistence');
-            obj.verifyEqual(em.entityMap.keys, sort(d'));
-            obj.verifyEqual(numel(em.entityMap.values), numel(e'));
         end
         
         

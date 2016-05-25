@@ -8,7 +8,7 @@ classdef CompoundEntityAttr < io.mpa.H5Entity
 
 	properties
 		group
-        entityId = TestPersistence.COMPUND_ENTITY_ATTR
+        entityId = TestSchema.COMPUND_ENTITY_ATTR
 	end
 
 	methods

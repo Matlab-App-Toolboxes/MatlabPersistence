@@ -1,24 +1,25 @@
 {
-	"persistence": "TestPersistence",
-
 	"location": [
 		{
 			"id": "A",
 			"description": "description about hdf5 file",
 			"local_path": "src/test/resources/test.h5",
-			"remotepath": ""
+			"remotepath": "",
+            "persistence": "TestPersistence"
 		},
 		{
 			"id": "B",
 			"description": "description about hdf5 file",
 			"local_path": "",
-			"remotepath": ""
+			"remotepath": "",
+            "persistence": "TestPersistence"
 		},
 		{
 			"id": "C",
 			"description": "description about hdf5 file",
 			"local_path": "",
-			"remotepath": ""
+			"remotepath": "",
+            "persistence": "TestPersistence"
 		}
 	]
 }

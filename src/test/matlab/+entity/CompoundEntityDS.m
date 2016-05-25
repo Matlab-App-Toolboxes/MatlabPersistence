@@ -8,7 +8,7 @@ classdef CompoundEntityDS < io.mpa.H5Entity
     
     properties
         group
-        entityId = TestPersistence.COMPUND_ENTITY_DS
+        entityId = TestSchema.COMPUND_ENTITY_DS
     end
     
     methods

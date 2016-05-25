@@ -16,7 +16,7 @@ classdef ComplexEntity < io.mpa.H5Entity & io.mpa.DynamicEntity
     
     properties
         group
-        entityId = TestPersistence.COMPLEX_ENTITY
+        entityId = TestSchema.COMPLEX_ENTITY
         prefix = 'struct'
         extendedStruct
     end
