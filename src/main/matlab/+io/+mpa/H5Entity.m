@@ -10,6 +10,7 @@ classdef H5Entity < handle
         isIdentifierCreated = false;
         finalSchema
         identifier
+        key
     end
     
     methods
@@ -65,6 +66,10 @@ classdef H5Entity < handle
         end
         
         function postFind(obj)
+        end
+
+        function key = get.key(obj)
+            key = [obj.group '/' obj.identifier];
         end
     end
 end
