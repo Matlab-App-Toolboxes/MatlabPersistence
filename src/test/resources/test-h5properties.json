@@ -10,9 +10,9 @@
 		{
 			"id": "B",
 			"description": "description about hdf5 file",
-			"local_path": "",
+			"local_path": "src/test/resources/test1.h5",
 			"remotepath": "",
-            "persistence": "TestPersistence"
+            "persistence": "TestPersistence2"
 		},
 		{
 			"id": "C",
