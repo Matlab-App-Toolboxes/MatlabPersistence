@@ -1,4 +1,4 @@
-classdef TestPersistence
+classdef TestPersistence < io.mpa.Persistence
     
     enumeration
         ENTITIES([...
@@ -7,16 +7,6 @@ classdef TestPersistence
             TestSchema.SIMPLE_ENTITY_ATTR,...
             TestSchema.COMPLEX_ENTITY,...
             ])
-    end
-    
-    properties
-        all
-    end
-    
-    methods
-        function obj = TestPersistence(entites)
-            obj.all = entites;
-        end
     end
 end
 

@@ -1,6 +1,6 @@
 function obj = createEntityManager(id, h5properties)
 
-if nargin < 2
+    if nargin < 2
         h5properties = which('h5properties.json');
     end
 
@@ -21,11 +21,12 @@ if nargin < 2
         throw (MException(msgID, msg));
     end
 
-    entites = enumeration(persistence);
+    p = enumeration(persistence);
+    entites = p.entities;
     entityMap = containers.Map();
     
-    for i = 1 :numel(entites.all)
-        e = entites.all(i);
+    for i = 1 :numel(entites)
+        e = entites(i);
         entityMap(char(e)) = e;
     end
     obj = io.mpa.H5EntityManager(fname, entityMap);
