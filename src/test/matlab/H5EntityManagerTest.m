@@ -147,7 +147,7 @@ classdef H5EntityManagerTest < matlab.unittest.TestCase
             expected.dateString = '17-May-2016';
             em.persist(expected);
             
-            actual = entity.SimpleEntityAttr('simple_entity');
+            actual = entity.SimpleEntityAttr('simple_entity_three');
             query = actual.getAllKeys();
             result = em.executeQuery(query);
             obj.verifyEqual(result, {'17-May-2016'; '18-May-2016'; '19-May-2016'});

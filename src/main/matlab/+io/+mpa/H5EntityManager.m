@@ -191,22 +191,26 @@ classdef H5EntityManager < handle
             end
             [data, size] =  h5Entity.toStructure(schema);
             props = fields(data);
-            path = h5Entity.group ;
             file = H5F.open(obj.fname, 'H5F_ACC_RDWR','H5P_DEFAULT');
+            space = H5S.create ('H5S_SCALAR');
             
             if ~ h5Entity.isGroupCreated
                 group = H5G.create(file, h5Entity.group, 0);
+                dset = H5D.create(group, h5Entity.identifier, 'H5T_STD_I32LE', space, 'H5P_DEFAULT');
+                
                 h5Entity.isGroupCreated = true;
-            else
+                h5Entity.isIdentifierCreated = true;
+                
+            elseif ~ h5Entity.isIdentifierCreated
                 group = H5G.open(file, h5Entity.group, 0);
+                dset = H5D.create(group, h5Entity.identifier, 'H5T_STD_I32LE', space, 'H5P_DEFAULT');
+                h5Entity.isIdentifierCreated = true;
             end
-            
-            H5G.close(group);
             H5F.close(file);
             
             % ToDo rewrite h5writeatt to core librarires
             for i = 1:numel(props)
-                h5writeatt(obj.fname, path, props{i}, data.(props{i}));
+                h5writeatt(obj.fname, h5Entity.key, props{i}, data.(props{i}));
             end
         end
         
@@ -220,7 +224,7 @@ classdef H5EntityManager < handle
             
             % ToDo rewrite h5readatt to core librarires
             for i = 1:numel(props)
-                rdata.(props{i}) = h5readatt(obj.fname, h5Entity.group , props{i});
+                rdata.(props{i}) = h5readatt(obj.fname, h5Entity.key , props{i});
             end
             h5Entity.setQueryResponse(rdata, schema);
         end
