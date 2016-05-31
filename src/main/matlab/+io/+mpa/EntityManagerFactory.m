@@ -1,16 +1,18 @@
 classdef EntityManagerFactory < handle
 
 	properties(SetAccess = 'private')
-		h5json
-		persistenceContext
+        persistenceCore
 	end
 
 	methods
 
-		function obj = EntityManagerFactory(fname)
-			 obj.h5json = loadjson(fname);
-			 obj.persistenceContext = containers.Map();
-		end
+		function obj = EntityManagerFactory(persistenceCore)
+            obj.persistenceCore = persistenceCore;
+        end
+        
+        function tf = hasPersistence(obj, name)
+            
+        end
 
 		function em = create(obj, id)
 
