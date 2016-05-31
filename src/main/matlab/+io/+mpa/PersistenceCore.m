@@ -29,7 +29,7 @@ classdef PersistenceCore < handle
     methods
 
         function obj = PersistenceCore()
-            obj.path = which('persistenceContext    .xml');
+            obj.path = which('persistence.xml');
             obj.persistenceContext = containers.Map();
             
             import io.mpa.orm.util.*;
