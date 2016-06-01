@@ -1,6 +1,6 @@
-classdef PersistenceCore < handle
+classdef Persistence < handle
     
-    properties(Access = private)
+    properties(SetAccess = private)
         persistence
         path
         persistenceContext
@@ -8,9 +8,9 @@ classdef PersistenceCore < handle
    
     methods(Access = private)
 
-        function map = getPersistenceProperties(obj, unitName)
+        function map = getPersistenceProperties(~, unit)
             map = containers.Map();
-            hashMap = io.mpa.orm.util.PersistenceUtil.getProperties(obj.persistenceUnit);
+            hashMap = io.mpa.orm.util.PersistenceUtil.getProperties(unit);
             hashKeys = hashMap.keys; 
            
             while hashKeys.hasMoreElements()
@@ -19,18 +19,18 @@ classdef PersistenceCore < handle
             end
         end
 
-        function ds = createDataSource(obj, entities, properties)
-            class = persistenceUnit.properties('dataSource');
-            dataSource = str2func(class)
+        function ds = createDataSource(~, entities, properties)
+            class = properties('dataSource');
+            dataSource = str2func(class);
             ds = dataSource(entities, properties);
         end
     end
 
     methods
 
-        function obj = PersistenceCore()
+        function obj = Persistence()
             obj.path = which('persistence.xml');
-            obj.persistenceContext = containers.Map();
+            obj.persistenceContext = io.mpa.infra.PersistenceContext();
             
             import io.mpa.orm.util.*;
             persistencePath = java.lang.String(obj.path);
@@ -41,7 +41,7 @@ classdef PersistenceCore < handle
         
         function addIfNotExist(obj, unitName)
             
-            if isKey(obj.persistenceContext, unitName)
+            if obj.persistenceContext.has(unitName)
                 return;
             end
 
@@ -56,17 +56,11 @@ classdef PersistenceCore < handle
             class = io.mpa.orm.schema.EntityMappings.class;
             entityList = JAXBUtil.unMarshal(ormPath, class).getEntity();
             entities = PersistenceFilter.getEntityMappings(entityList, unit);
-            
 
-            properties = obj.getPersistenceProperties(unitName);
+            properties = obj.getPersistenceProperties(unit);
             dataSource = obj.createDataSource(entities, properties);
             
-            obj.persistenceContext(unitName) = dataSource;
-        end
-
-
-        function ds = getDataSource(obj, unitName)
-            ds = obj.persistenceContext(unitName);
+            obj.persistenceContext.add(unitName, dataSource);
         end
     end
     
@@ -76,9 +70,9 @@ classdef PersistenceCore < handle
             persistent f;
             
             if isempty(f)
-                p = io.mpa.PersistenceCore();
+                p = io.mpa.core.Persistence();
                 p.addIfNotExist(unitName);
-                f =  io.mpa.EntityManagerFactory(p);
+                f =  io.mpa.infra.EntityManagerFactory(p.persistenceContext);
             end
             f.persistenceCore.addIfNotExist(unitName);
             emf = f;

@@ -1,4 +1,4 @@
-classdef H5DataSource < handle
+classdef DataSource < handle
 	
 	properties(SetAccess = private)
 		localPath
@@ -9,7 +9,7 @@ classdef H5DataSource < handle
 
 	methods
 
-		function obj = H5DataSource(entities, propertyMap)
+		function obj = DataSource(entities, propertyMap)
 			obj.localPath = propertyMap('localPath');
 			obj.remotePath = propertyMap('remotePath');
 			obj.entities = entities;
