@@ -6,6 +6,11 @@ classdef H5Object < handle
         mapper
     end
     
+    properties(Abstract)
+        memType
+        space
+    end
+    
     methods
         
         function clear(obj)
