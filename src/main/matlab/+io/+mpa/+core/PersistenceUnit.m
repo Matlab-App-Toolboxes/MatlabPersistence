@@ -6,12 +6,15 @@ classdef PersistenceUnit < handle
     
     properties(SetAccess = private)
         name
-        entityMap
+        entitySchemaMap
         propertyMap
+        provider
     end
     
     properties(Constant)
         ENTITY_MAPPING_CLASS = 'io.mpa.orm.schema.EntityMappings'
+        PROVIDER = 'provider'
+        ENTITIES = 'entities';
     end
     
     methods
@@ -21,7 +24,15 @@ classdef PersistenceUnit < handle
             obj.name = name;
             obj.populateEntityMap();
             obj.populatePropertyMap();
+            obj.createProvider();
         end
+        
+        function createProvider(obj)
+             clazz = obj.propertyMap(obj.PROVIDER);
+             constructor = str2func(clazz);
+             obj.provider = constructor(obj.propertyMap);
+        end
+        
     end
     
     methods(Access = private)
@@ -37,10 +48,11 @@ classdef PersistenceUnit < handle
                 
                 obj.propertyMap(key) = value;
             end
+            obj.propertyMap(obj.ENTITIES) = obj.entitySchemaMap.keys;
         end
         
         function populateEntityMap(obj)
-            obj.entityMap = containers.Map();
+            obj.entitySchemaMap = containers.Map();
             
             path = obj.jPersistenceUnit.getMappingFile().get(0);
             import io.mpa.core.metaModel.*;
@@ -55,7 +67,7 @@ classdef PersistenceUnit < handle
             while jIterator.hasNext()
                 jEntity = iterator.next();
                 clazz = jEntity.getClazz();
-                obj.entityMap(clazz) = Entity(jEntity);
+                obj.entitySchemaMap(clazz) = EntitySchema(jEntity);
             end
         end
     end

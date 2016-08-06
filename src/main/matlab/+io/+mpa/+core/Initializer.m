@@ -5,9 +5,8 @@ classdef Initializer < handle
 		persistencePath
 	end
 
-	properties
+	properties(Access = private)
 		context
-		delegate
 	end
 
 	properties(Constant)
