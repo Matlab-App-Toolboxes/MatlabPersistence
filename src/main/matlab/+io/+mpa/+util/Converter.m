@@ -1,7 +1,7 @@
 classdef Converter < handle
     
     methods(Abstract)
-    	convert(obj, entity)
-	end
+        convert(obj, entity)
+    end
 end
 

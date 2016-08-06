@@ -28,9 +28,9 @@ classdef PersistenceUnit < handle
         end
         
         function createProvider(obj)
-             clazz = obj.propertyMap(obj.PROVIDER);
-             constructor = str2func(clazz);
-             obj.provider = constructor(obj.propertyMap);
+            clazz = obj.propertyMap(obj.PROVIDER);
+            constructor = str2func(clazz);
+            obj.provider = constructor(obj.propertyMap);
         end
         
     end
