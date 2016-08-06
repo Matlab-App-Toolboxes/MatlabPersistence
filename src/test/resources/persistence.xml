@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence persistence_2_1.xsd">
+	<persistence-unit name="patch-rig">
+		<mapping-file>calibration-orm.xml</mapping-file>
+		<property name="localPath" value=""/>
+		<property name="remotePath" value=""/>
+		<property name="provider" value="io.mpa.h5.H5MatlabProvider"/>
+	</persistence-unit>
+</persistence>
