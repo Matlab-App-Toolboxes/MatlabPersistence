@@ -13,9 +13,6 @@ target/
 *.log
 logs/
 
-#libraries
-lib/
-
 target/
 pom.xml.tag
 pom.xml.releaseBackup

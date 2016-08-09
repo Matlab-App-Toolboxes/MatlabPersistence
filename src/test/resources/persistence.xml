@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+             xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence persistence_2_1.xsd">
+    <persistence-unit name="patch-rig">
+        <mapping-file>calibration-orm.xml</mapping-file>
+        <provider>mpa.h5.H5MatlabProvider</provider>
+        <class>entity.IntensityMeasurement</class>
+        <properties>
+            <property name="local-path" value="D:\project\repo\github\matlab-persistence\fixtures\test.h5"/>
+            <property name="remote-path" value=""/>
+            <property name="create-mode" value="true"/>
+            <property name="use-cache" value="false"/>
+        </properties>
+    </persistence-unit>
+</persistence>
