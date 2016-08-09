@@ -10,15 +10,15 @@ classdef H5MatlabProvider < handle
     methods
         
         function init(obj, map)
-            import io.mpa.h5.*;
+            import mpa.h5.*;
             
-            obj.localPath = map(Constants.PROVIDER_LOCAL_PATH);
-            obj.remotePath = map(Constants.PROVIDER_REMOTE_PATH);
-            obj.createMode = map(Constants.PROVIDER_CREATE_MODE);
-            obj.objectCache = containers.Map(Constants.PROVIDER_USE_CACHE);
+            obj.localPath = char(map(Constants.PROVIDER_LOCAL_PATH));
+            obj.remotePath = char(map(Constants.PROVIDER_REMOTE_PATH));
+            obj.createMode = strcmp(map(Constants.PROVIDER_CREATE_MODE), 'true');
+            obj.useCache = char(map(Constants.PROVIDER_USE_CACHE));
             
             if ~ exist(obj.localPath, 'file') && obj.createMode
-                obj.createFile(map(PersistenceUnit.ENTITIES));
+                obj.createFile(map(mpa.core.PersistenceUnit.ENTITIES));
             end
         end
         
@@ -27,7 +27,11 @@ classdef H5MatlabProvider < handle
             if ~ exist(obj.localPath, 'file')
                 error('Matlab:persistence:filenotfound', 'h5 file not found');
             end
-            manager = io.mpa.h5.matlab.createManager(obj.localPath, types);
+            manager = mpa.h5.matlab.createManager(obj.localPath, types);
+        end
+        
+        function createFile(obj, entities)
+            
         end
         
         function close(obj)

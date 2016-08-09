@@ -1,4 +1,4 @@
-classdef DateTimeConverter < io.mpa.util.Converter
+classdef DateTimeConverter < mpa.util.Converter
     
     properties
         metaModel

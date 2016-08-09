@@ -5,6 +5,10 @@ classdef EntityManager < handle
         persistenceUnit
     end
     
+    properties
+        closeInitializer
+    end
+    
     methods
         function obj = EntityManager(unit)
             obj.provider = unit.provider;
@@ -28,16 +32,12 @@ classdef EntityManager < handle
             obj.provider.delegate(elementCollection).save(entity);
         end
         
-        function result = execute(obj, queryString, entityClazz, varargin)
-            dataManagerClazz = obj.getDataManager(entityInstance);
-            result = obj.provider.delegate(dataManagerClazz).execute('query', queryString,...
+        function query = createQuery(obj, queryString, entityClazz, varargin)
+            dataManager = obj.getDataManager(entityClazz);
+            dataManager.provider = obj.provider;
+            query = dataManager.parse('query', queryString,...
                 'clazz', entityClazz,...
-                'entityManager', obj,...
                 varargin);
-        end
-        
-        function close(obj)
-            obj.provider.close();
         end
     end
     
@@ -47,12 +47,6 @@ classdef EntityManager < handle
             clazz = class(entityInstance);
             e = obj.persistenceUnit.entitySchemaMap(clazz);
             b = e.basics;
-        end
-        
-        function dataManagerClazz = getDataManager(obj, entityInstance)
-            clazz = class(entityInstance);
-            e = obj.persistenceUnit.entitySchemaMap(clazz);
-            dataManagerClazz = e.dataManager;
         end
         
         function c = getElementCollections(obj, entityInstance)
@@ -70,20 +64,9 @@ classdef EntityManager < handle
                 id = entitySchema.converter.convert(id);
             end
         end
-    end
-    
-    methods(Static)
         
-        function obj = create(unitName, path)
-            if nargin < 2
-                path = which('persistence.xml');
-            end
-            persistent initializer;
-            if isempty(initializer)
-                initializer = io.mpa.core.Initializer(path);
-            end
-            unit = initializer.getPersistenceUnit(unitName);
-            obj = io.mpa.core.EntityManager(unit);
+        function delete(obj)
+            obj.closeInitializer();
         end
     end
 end
