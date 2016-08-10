@@ -21,7 +21,7 @@ classdef AttributeManager < mpa.h5.matlab.GroupManager
         
         function save(obj, entity)
             group = entity.id;
-            obj.createGroup(group); 
+            obj.createGroup(group);
             
             h5writeatt(obj.fname, group, 'id', group);
             for basic = obj.basics

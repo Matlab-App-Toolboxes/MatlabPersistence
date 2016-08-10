@@ -19,7 +19,7 @@ classdef GroupManager < handle
                 statbuf = H5G.get_objinfo (fid, path, 0);
                 tf = statbuf.type == H5ML.get_constant_value('H5G_GROUP');
             catch Me
-                tf = strfind(Me.message, ' ''abc'' doesn''t exist') < 1;
+                tf = strfind(Me.message, [' ' path ' doesn''t exist']) < 1;
             end
             H5F.close(fid);
         end

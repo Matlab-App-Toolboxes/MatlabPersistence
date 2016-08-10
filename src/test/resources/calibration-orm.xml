@@ -4,11 +4,22 @@
     <entity class="entity.Basic" name = "basic">
         <attributes>
             <id name="id" attribute-type="string">
-                <converter name='intensity-id' class='mpa.util.DateTimeConverter' />
+                <converter name='basic-id' class='mpa.util.DateTimeConverter' />
             </id>
             <basic name="string" attribute-type="string" />
             <basic name="double" attribute-type="double" />
             <basic name="int" attribute-type="int" />
+        </attributes>
+    </entity>
+    
+    <entity class="entity.Collections" name = "collections">
+        <attributes>
+            <id name="id" attribute-type="string">
+                <converter name='collection-id' class='mpa.util.DateTimeConverter' />
+            </id>
+            <element-collection  name="strings" attribute-type="string" />
+            <element-collection  name="doubles" attribute-type="double" />
+            <element-collection  name="ints" attribute-type="int" />
         </attributes>
     </entity>
     

@@ -26,7 +26,7 @@ classdef CoreTest < matlab.unittest.TestCase
         function testGetPersistenceUnit(obj)
             entities = mpa.core.PersistenceUnit.ENTITIES;
             persistenceName = mpa.core.PersistenceUnit.PERSISTENCE_NAME;
-            entitiesClazz =  {'entity.Basic', 'entity.IntensityMeasurement'};
+            entitiesClazz =  {'entity.Basic',  'entity.Collections', 'entity.IntensityMeasurement'};
             properties = {'local-path', 'remote-path', 'use-cache', 'create-mode', entities, persistenceName};
             values = {[obj.fixture filesep obj.TEST_FILE], '', 'false', 'true', entitiesClazz, 'patch-rig'};
             
@@ -74,7 +74,8 @@ classdef CoreTest < matlab.unittest.TestCase
         function testEntityManager(obj)
             em = mpa.factory.createEntityManager('patch-rig');
             obj.verifyNotEmpty(em);
-           
+            
+            % test basic
             entity = struct();
             entity.string = 'test-string';
             entity.double = 1e-12;
@@ -99,6 +100,27 @@ classdef CoreTest < matlab.unittest.TestCase
             obj.verifyEqual(expected.double, entity.double);
             obj.verifyEqual(expected.int, entity.int);
             obj.verifyEqual(expected.id, group);
+            
+            % test collections
+            entity = struct();
+            entity.strings = {'one'; 'two'; 'three'};
+            entity.doubles = [1e-9; 1e-10; 1e-11];
+            entity.ints = int32([1; 2; 3]);
+            entity.id = 'id';
+            entity.class = 'entity.Collections';
+            em.persist(entity);
+            
+            info = h5info(fname, '/entity_Collections');
+            group = info.Groups(1).Name;
+            query = struct('class', 'entity.Collections', 'id', 'id');
+            date = mpa.util.DateTimeConverter.keyToDateTime(group);
+            expected = em.find(query, date);
+            
+            obj.verifyEqual(expected.strings, entity.strings);
+            obj.verifyEqual(expected.doubles, entity.doubles);
+            obj.verifyEqual(expected.ints, entity.ints);
+            obj.verifyEqual(expected.id, group);
+            
             em.close();
         end
     end
