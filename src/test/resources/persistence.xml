@@ -6,6 +6,7 @@
         <mapping-file>calibration-orm.xml</mapping-file>
         <provider>mpa.h5.H5MatlabProvider</provider>
         <class>entity.IntensityMeasurement</class>
+        <class>entity.Basic</class>
         <properties>
             <property name="local-path" value="D:\project\repo\github\matlab-persistence\fixtures\test.h5"/>
             <property name="remote-path" value=""/>

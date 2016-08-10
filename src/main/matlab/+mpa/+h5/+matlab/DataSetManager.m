@@ -1,15 +1,15 @@
-classdef DataSetManager < handle
+classdef DataSetManager < mpa.h5.matlab.GroupManager
     
     properties(Access = private)
         elementCollections
-        fname
     end
     
     methods
         
         function obj = DataSetManager(fname, elementCollections)
+            obj@ mpa.h5.matlab.GroupManager(fname);
             obj.elementCollections = elementCollections;
-            obj.fname = fname;
+            
         end
         
         function find(obj, entity)

@@ -15,6 +15,7 @@ classdef PersistenceUnit < handle
     properties(Constant)
         ENTITY_MAPPING_CLASS = 'io.mpa.orm.schema.EntityMappings'
         ENTITIES = 'entities';
+        PERSISTENCE_NAME = 'persistence-unit-name'
     end
     
     methods
@@ -52,6 +53,7 @@ classdef PersistenceUnit < handle
                 obj.propertyMap(char(key)) = char(value);
             end
             obj.propertyMap(obj.ENTITIES) = obj.entitySchemaMap.keys;
+            obj.propertyMap(obj.PERSISTENCE_NAME) = obj.name;
         end
         
         function populateEntityMap(obj)

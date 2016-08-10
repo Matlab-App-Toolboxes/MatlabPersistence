@@ -15,21 +15,32 @@ classdef EntityManager < handle
             obj.persistenceUnit = unit;
         end
         
-        function entity = find(obj, entity)
+        function entity = find(obj, entity, key)
             basics = obj.getBasics(entity);
             elementCollection = obj.getElementCollections(entity);
+            entity = obj.preFind(entity, key);
             
-            entity = obj.provider.delegate(basics).find(entity);
-            entity = obj.provider.delegate(elementCollection).find(entity);
+            if ~ isempty(basics)
+                entity = obj.provider.delegate(basics).find(entity);
+            end
+            
+            if ~ isempty(elementCollection)
+                entity = obj.provider.delegate(elementCollection).find(entity);
+            end
         end
         
         function persist(obj, entity)
             basics = obj.getBasics(entity);
             elementCollection = obj.getElementCollections(entity);
-            entity.id = obj.getEntityId(entity);
+            entity = obj.prePersist(entity);
             
-            obj.provider.delegate(basics).save(entity);
-            obj.provider.delegate(elementCollection).save(entity);
+            if ~ isempty(basics)
+                obj.provider.delegate(basics).save(entity);
+            end
+            
+            if ~ isempty(elementCollection)
+                obj.provider.delegate(elementCollection).save(entity);
+            end
         end
         
         function query = createQuery(obj, queryString, entityClazz, varargin)
@@ -39,30 +50,53 @@ classdef EntityManager < handle
                 'clazz', entityClazz,...
                 varargin);
         end
+        
+        function close(obj)
+            obj.closeInitializer();
+        end
     end
     
     methods(Access = private)
         
         function b = getBasics(obj, entityInstance)
             clazz = class(entityInstance);
+            
+            if isstruct(entityInstance)
+                clazz = entityInstance.class;
+            end
             e = obj.persistenceUnit.entitySchemaMap(clazz);
             b = e.basics;
         end
         
         function c = getElementCollections(obj, entityInstance)
             clazz = class(entityInstance);
+            
+            if isstruct(entityInstance)
+                clazz = entityInstance.class;
+            end
             e = obj.persistenceUnit.entitySchemaMap(clazz);
             c = e.elementCollections;
         end
         
-        function id = getEntityId(obj, entityInstance)
-            clazz = class(entityInstance);
-            entitySchema = obj.persistenceUnit.entitySchemaMap(clazz);
-            id = entityInstance.(entitySchema.id);
+        function entityInstance = prePersist(obj, entityInstance)
             
-            if isempty(entitySchema.id.converter)
-                id = entitySchema.converter.convert(id);
+            clazz = mpa.core.metamodel.EntitySchema.getClazz(entityInstance);
+            schema = obj.persistenceUnit.entitySchemaMap(clazz);
+            
+            if ~ isempty(schema.id.converter)
+                key = schema.id.converter.prePersist(entityInstance);
             end
+            entityInstance.id = key;
+        end
+        
+        function entityInstance = preFind(obj, entityInstance, key)
+            clazz = mpa.core.metamodel.EntitySchema.getClazz(entityInstance);
+            schema = obj.persistenceUnit.entitySchemaMap(clazz);
+            
+            if ~ isempty(schema.id.converter)
+                key = schema.id.converter.preFind(entityInstance, key);
+            end
+            entityInstance.id = key;
         end
         
         function delete(obj)

@@ -1,7 +1,8 @@
 classdef Converter < handle
     
     methods(Abstract)
-        convert(obj, entity)
+        preFind(obj, entity, key)
+        prePersist(obj, entity)
     end
 end
 
