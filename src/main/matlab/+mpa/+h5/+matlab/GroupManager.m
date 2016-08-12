@@ -48,6 +48,9 @@ classdef GroupManager < handle
             H5F.close (fid);
         end
         
+        function close(obj)
+            delete(obj);
+        end
     end
     
 end

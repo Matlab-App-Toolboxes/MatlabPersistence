@@ -15,7 +15,7 @@ classdef DataSetManager < mpa.h5.matlab.GroupManager
         function entity = find(obj, entity)
             
             fid = H5F.open(obj.fname, 'H5F_ACC_RDONLY', 'H5P_DEFAULT');
-            dset = H5D.open(fid, [entity.id '/' mpa.h5.Constants.DATA_SET_NAME]);
+            dset = H5D.open(fid, [entity.id '/' mpa.core.Constants.DATA_SET_NAME]);
             
             [types, size] = obj.getH5ComplexType();
             % Create the compound datatype for memory.
@@ -70,7 +70,7 @@ classdef DataSetManager < mpa.h5.matlab.GroupManager
             space = H5S.create_simple(1,fliplr(dims), []);
             fid = H5F.open(obj.fname, 'H5F_ACC_RDWR', 'H5P_DEFAULT');
             
-            dset = H5D.create(fid, [group '/' mpa.h5.Constants.DATA_SET_NAME], filetype, space, 'H5P_DEFAULT');
+            dset = H5D.create(fid, [group '/' mpa.core.Constants.DATA_SET_NAME], filetype, space, 'H5P_DEFAULT');
             H5D.write(dset, memtype, 'H5S_ALL', 'H5S_ALL', 'H5P_DEFAULT', data);
             
             H5D.close(dset);
