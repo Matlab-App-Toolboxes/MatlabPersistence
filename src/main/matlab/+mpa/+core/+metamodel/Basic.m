@@ -7,6 +7,7 @@ classdef Basic < handle
     properties(Dependent)
         name
         attributeType
+        field
     end
     
     properties(SetAccess = private)
@@ -31,6 +32,10 @@ classdef Basic < handle
         
         function type = get.attributeType(obj)
             type = char(obj.jBasic.getAttributeType());
+        end
+        
+        function field = get.field(obj)
+            field = char(obj.jBasic.getField());
         end
     end
 end

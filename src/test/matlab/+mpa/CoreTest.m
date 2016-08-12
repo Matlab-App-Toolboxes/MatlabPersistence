@@ -53,8 +53,8 @@ classdef CoreTest < matlab.unittest.TestCase
             
             % primary id comparison
             obj.verifyEqual(schema.id.name, 'id');
+            obj.verifyEqual(schema.id.field, 'mpa.fields.DateTime');
             obj.verifyEqual(schema.id.attributeType, 'string');
-            obj.verifyEqual(class(schema.id.converter), 'mpa.util.DateTimeConverter');
             
             obj.verifyNumElements(schema.basics, 9)
             obj.verifyNumElements(schema.elementCollections, 4);
@@ -76,50 +76,60 @@ classdef CoreTest < matlab.unittest.TestCase
             obj.verifyNotEmpty(em);
             
             % test basic
-            entity = struct();
-            entity.string = 'test-string';
-            entity.double = 1e-12;
-            entity.int = 1;
-            entity.id = 'id';
-            entity.class = 'entity.Basic';
-            em.persist(entity);
+            expected = struct();
+            expected.string = 'test-string';
+            expected.double = 1e-12;
+            expected.int = 1;
+            expected.id = 'id';
+            expected.class = 'entity.Basic';
+            em.persist(expected);
             
             pause(1);
-            em.persist(entity);
+            em.persist(expected);
             
             fname = [obj.fixture filesep obj.TEST_FILE];
             info = h5info(fname, '/entity_Basic');
+            
             obj.verifyNumElements(info.Groups, 2);
             group = info.Groups(1).Name;
+            field = mpa.fields.DateTime(group);
             
-            query = struct('class', 'entity.Basic', 'id', 'id');
-            date = mpa.util.DateTimeConverter.keyToDateTime(group);
-            expected = em.find(query, date);
+            dateTime = strsplit(datestr(field.time), ' ');
+            actualDate = dateTime{1};
+            obj.verifyEqual(actualDate, datestr(date))
             
-            obj.verifyEqual(expected.string, entity.string);
-            obj.verifyEqual(expected.double, entity.double);
-            obj.verifyEqual(expected.int, entity.int);
-            obj.verifyEqual(expected.id, group);
+            query = struct('class', 'entity.Basic', 'id', field.key);
+            actual = em.find(query);
+            obj.verifyEqual(actual.string, expected.string);
+            obj.verifyEqual(actual.double, expected.double);
+            obj.verifyEqual(actual.int, expected.int);
+            obj.verifyEqual(actual.id, group);
+            
             
             % test collections
-            entity = struct();
-            entity.strings = {'one'; 'two'; 'three'};
-            entity.doubles = [1e-9; 1e-10; 1e-11];
-            entity.ints = int32([1; 2; 3]);
-            entity.id = 'id';
-            entity.class = 'entity.Collections';
-            em.persist(entity);
+            expected = struct();
+            expected.strings = {'one'; 'two'; 'three'};
+            expected.doubles = [1e-9; 1e-10; 1e-11];
+            expected.ints = int32([1; 2; 3]);
+            expected.id = 'id';
+            expected.class = 'entity.Collections';
+            em.persist(expected);
             
             info = h5info(fname, '/entity_Collections');
             group = info.Groups(1).Name;
-            query = struct('class', 'entity.Collections', 'id', 'id');
-            date = mpa.util.DateTimeConverter.keyToDateTime(group);
-            expected = em.find(query, date);
             
-            obj.verifyEqual(expected.strings, entity.strings);
-            obj.verifyEqual(expected.doubles, entity.doubles);
-            obj.verifyEqual(expected.ints, entity.ints);
-            obj.verifyEqual(expected.id, group);
+            field = mpa.fields.DateTime(group);
+            dateTime = strsplit(datestr(field.time), ' ');
+            actualDate = dateTime{1};
+            obj.verifyEqual(actualDate, datestr(date))
+            
+            query = struct('class', 'entity.Collections', 'id', field.key);
+            actual = em.find(query);
+            
+            obj.verifyEqual(actual.strings, expected.strings);
+            obj.verifyEqual(actual.doubles, expected.doubles);
+            obj.verifyEqual(actual.ints, expected.ints);
+            obj.verifyEqual(actual.id, group);
             
             em.close();
         end

@@ -64,7 +64,7 @@ classdef PersistenceUnit < handle
             
             jClass = mpa.util.loadJavaClass(obj.ENTITY_MAPPING_CLASS);            
             ormPath = [fileparts(obj.path) filesep ormPath];
-            jMappings = Common.unMarshal(ormPath, jClass);
+            jMappings = ComUtil.unMarshal(ormPath, jClass);
             jEntities = PersistenceFilter.getEntityMappings(jMappings.getEntity() , obj.jPersistenceUnit);
             
             jIterator = jEntities.iterator;

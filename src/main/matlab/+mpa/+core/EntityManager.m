@@ -15,10 +15,9 @@ classdef EntityManager < handle
             obj.persistenceUnit = unit;
         end
         
-        function entity = find(obj, entity, key)
+        function entity = find(obj, entity)
             basics = obj.getBasics(entity);
             elementCollection = obj.getElementCollections(entity);
-            entity = obj.preFind(entity, key);
             
             if ~ isempty(basics)
                 entity = obj.provider.delegate(basics).find(entity);
@@ -83,20 +82,10 @@ classdef EntityManager < handle
             clazz = mpa.core.metamodel.EntitySchema.getClazz(entityInstance);
             schema = obj.persistenceUnit.entitySchemaMap(clazz);
             
-            if ~ isempty(schema.id.converter)
-                key = schema.id.converter.prePersist(entityInstance);
+            if ~ isempty(schema.id.field)
+                fieldInstance = mpa.fields.keyGenerator(entityInstance, schema.id.field);
             end
-            entityInstance.id = key;
-        end
-        
-        function entityInstance = preFind(obj, entityInstance, key)
-            clazz = mpa.core.metamodel.EntitySchema.getClazz(entityInstance);
-            schema = obj.persistenceUnit.entitySchemaMap(clazz);
-            
-            if ~ isempty(schema.id.converter)
-                key = schema.id.converter.preFind(entityInstance, key);
-            end
-            entityInstance.id = key;
+            entityInstance.id = fieldInstance.key;
         end
         
         function delete(obj)

@@ -43,7 +43,7 @@ classdef Initializer < handle
         function loadPersistence(obj)
             jClass = mpa.util.loadJavaClass(obj.PERSISTENCE_CLASS);
             import io.mpa.orm.util.*;
-            obj.jPersistence = Common.unMarshal(obj.persistencePath, jClass);
+            obj.jPersistence = ComUtil.unMarshal(obj.persistencePath, jClass);
         end
     end
 end
