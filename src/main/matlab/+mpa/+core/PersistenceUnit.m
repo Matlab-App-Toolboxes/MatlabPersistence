@@ -52,7 +52,7 @@ classdef PersistenceUnit < handle
                 
                 obj.propertyMap(char(key)) = char(value);
             end
-            obj.propertyMap(obj.ENTITIES) = obj.entitySchemaMap.keys;
+            obj.propertyMap(obj.ENTITIES) = obj.entitySchemaMap;
             obj.propertyMap(obj.PERSISTENCE_NAME) = obj.name;
         end
         
