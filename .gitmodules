@@ -1,0 +1,3 @@
+[submodule "lib/MatlabQuery"]
+	path = lib/MatlabQuery
+	url = git@github.com:ragavsathish/MatlabQuery.git

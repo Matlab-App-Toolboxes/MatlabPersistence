@@ -6,7 +6,6 @@ classdef TableManager < handle
     
     properties(Access = private)
         tableCache
-        rowCache
         fname
     end
     
@@ -21,8 +20,12 @@ classdef TableManager < handle
         end
         
         function load(obj, entity)
+            clazz = entity;
             
-            clazz = mpa.util.getClazz(entity);
+            if ~ ischar(entity)
+                clazz = mpa.util.getClazz(entity);
+            end
+            
             if ~ isempty(obj.tableCache)
                 return
             end
@@ -31,7 +34,6 @@ classdef TableManager < handle
             
             result = load(obj.fname);
             obj.tableCache = result.table;
-            obj.rowCache = cell(0, numel(result.table.Properties.VariableNames));
         end
         
         function entity = find(obj, entity)
@@ -66,24 +68,30 @@ classdef TableManager < handle
             if isempty(entity.(idColumn))
                 entity.(idColumn)  = counter + 1;
             end
-            
+            rowCache = cell(0, numel(columns));
             
             for i = 1 : numel(columns)
                 column = columns{i};
-                obj.rowCache{entity.(idColumn), i} = entity.(column);
+                rowCache{i} = entity.(column);
             end
-            newTable = cell2table(obj.rowCache, 'VariableNames', columns);
+            newTable = cell2table(rowCache, 'VariableNames', columns);
             obj.tableCache = [obj.tableCache; newTable];
+            
+            table = obj.tableCache;
+            save(obj.fname, 'table');
+        end
+        
+        function query = createQuery(obj, clazz)
+            obj.load(clazz);
+            query = linq(table2struct(obj.tableCache));
         end
         
         function close(obj)
-            table = obj.tableCache;
-            save(obj.fname, 'table');
-            obj.rowCache = [];
             obj.tableCache = [];
             obj.fname = [];
             obj.closeInitializer();
         end
+        
         
         function delete(obj)
             obj.closeInitializer();

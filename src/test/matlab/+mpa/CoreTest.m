@@ -151,10 +151,25 @@ classdef CoreTest < matlab.unittest.TestCase
             expected.id = [];
             em.persist(expected);
             
+            
             query = struct('class', 'entity.TestTable', 'id', []);
             actual = em.find(query);
             obj.verifyEqual(actual.id, 1);
             obj.verifyEqual(actual.string{1}, expected.string);
+            obj.verifyEqual(actual.double, expected.double);
+            obj.verifyEqual(actual.integer, expected.integer);
+            obj.verifyEqual(actual.integer, expected.integer);
+            obj.verifyEqual(actual.doubleArray, expected.doubleArray);
+            obj.verifyEqual(actual.stringArray, expected.stringArray);
+            
+            em.persist(expected);
+            em.close();
+            
+            em = mpa.factory.createEntityManager('patch-rig-log');            
+            query = em.createQuery('entity.TestTable');
+            actual = query.where(@(x) x.id == 2).toArray();
+            obj.verifyEqual(actual.id, 2);
+            obj.verifyEqual(actual.string, expected.string);
             obj.verifyEqual(actual.double, expected.double);
             obj.verifyEqual(actual.integer, expected.integer);
             obj.verifyEqual(actual.integer, expected.integer);

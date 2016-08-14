@@ -25,11 +25,14 @@ classdef SimpleMatlabProvider < mpa.core.AbstractProvider
         end
         
         function createTable(obj, schema)
+            name = matlab.lang.makeValidName(schema.class);
+            fname = [obj.localPath name '.mat'];
+            
+            if exist(fname, 'file')
+                return;
+            end
             variables = {schema.id.name , schema.basics(:).name schema.elementCollections(:).name};
             data = cell(0, numel(variables));
-            name = matlab.lang.makeValidName(schema.class);
-            
-            fname = [obj.localPath name '.mat'];
             table = cell2table(data);
             table.Properties.VariableNames = variables;
             save(fname, 'table');
