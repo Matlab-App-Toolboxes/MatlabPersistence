@@ -6,9 +6,13 @@ classdef AttributeManager < mpa.h5.matlab.GroupManager
     
     methods
         
-        function obj = AttributeManager(fname, types)
-            obj@ mpa.h5.matlab.GroupManager(fname)
-            obj.basics = types;
+        function obj = AttributeManager(fname)
+            obj@ mpa.h5.matlab.GroupManager(fname);
+        end
+        
+        
+        function init(obj, schema)
+            obj.basics = schema.basics;
         end
         
         function entity = find(obj, entity)
@@ -19,7 +23,7 @@ classdef AttributeManager < mpa.h5.matlab.GroupManager
             end
         end
         
-        function save(obj, entity)
+        function entity = save(obj, entity)
             group = entity.id;
             obj.createGroup(group);
             
@@ -28,6 +32,10 @@ classdef AttributeManager < mpa.h5.matlab.GroupManager
                 value = entity.(basic.name);
                 h5writeatt(obj.fname, group, basic.name, value);
             end
+        end
+        
+        function close(obj, ~)
+            obj.basics = [];
         end
         
     end

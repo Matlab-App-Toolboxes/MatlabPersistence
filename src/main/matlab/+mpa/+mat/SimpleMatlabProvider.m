@@ -2,6 +2,7 @@ classdef SimpleMatlabProvider < mpa.core.AbstractProvider
     
     properties
         manager
+        entityMap
     end
     
     methods
@@ -14,30 +15,42 @@ classdef SimpleMatlabProvider < mpa.core.AbstractProvider
         
         function createEntites(obj, entityMap)
             entities = entityMap.keys();
+            
             for i = 1 : numel(entities)
                 e = entities{i};
-                table = matlab.lang.makeValidName(e);
-                
                 schema = entityMap(e);
-                TableManager.createTable([obj.path filesep table '.mat'], schema);
+                obj.createTable(schema);
             end
+            obj.entityMap = entityMap;
         end
         
-        function m = getManager(obj, types)
+        function createTable(obj, schema)
+            variables = {schema.id.name , schema.basics(:).name schema.elementCollections(:).name};
+            data = cell(0, numel(variables));
+            name = matlab.lang.makeValidName(schema.class);
+            
+            fname = [obj.localPath name '.mat'];
+            table = cell2table(data);
+            table.Properties.VariableNames = variables;
+            save(fname, 'table');
+        end
+        
+        function manager = createEntityManager(obj)
             
             if ~ exist(obj.localPath, 'file')
                 error('Matlab:persistence:filenotfound', 'h5 file not found');
             end
-            if isemty(obj.manager)
-                obj.manager = mpa.mat.TableManager(obj.localPath);
+            if isempty(obj.manager)
+                manager = mpa.mat.EntityManager(obj.localPath);
             end
-            obj.manager.currentTypes = types;
-            m = obj.manager;
+            obj.manager = manager;
         end
         
         function close(obj)
-            obj.manager.saveTable();
+            % TODO synchronize with server
+            obj.manager.close();
             delete(obj.manager);
+            obj.manager = [];
         end
     end
     
