@@ -30,7 +30,7 @@ classdef H5MatlabProvider < mpa.core.AbstractProvider
             if ~ exist(obj.localPath, 'file')
                 error('Matlab:persistence:filenotfound', 'h5 file not found');
             end
-            manager = mpa.h5.matlab.EntityManager(obj.localPath, obj.entityMap);
+            manager = mpa.h5.matlab.H5Manager(obj.localPath, obj.entityMap);
         end
         
         function close(obj)

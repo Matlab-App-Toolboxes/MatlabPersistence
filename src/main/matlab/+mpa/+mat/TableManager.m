@@ -1,4 +1,4 @@
-classdef EntityManager < handle
+classdef TableManager < handle
     
     properties(Access = private)
         path
@@ -16,7 +16,7 @@ classdef EntityManager < handle
     
     methods
         
-        function obj = EntityManager(path)
+        function obj = TableManager(path)
             obj.path = path;
         end
         

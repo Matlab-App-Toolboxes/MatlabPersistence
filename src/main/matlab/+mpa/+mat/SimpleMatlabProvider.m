@@ -41,7 +41,7 @@ classdef SimpleMatlabProvider < mpa.core.AbstractProvider
                 error('Matlab:persistence:filenotfound', 'h5 file not found');
             end
             if isempty(obj.manager)
-                manager = mpa.mat.EntityManager(obj.localPath);
+                manager = mpa.mat.TableManager(obj.localPath);
             end
             obj.manager = manager;
         end

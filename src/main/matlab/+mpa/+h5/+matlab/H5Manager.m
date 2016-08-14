@@ -1,4 +1,4 @@
-classdef EntityManager < handle
+classdef H5Manager < handle
     
     properties
         attributeManager
@@ -14,7 +14,7 @@ classdef EntityManager < handle
     
     methods
         
-        function obj = EntityManager(fname, entityMap)
+        function obj = H5Manager(fname, entityMap)
             obj.attributeManager = mpa.h5.matlab.AttributeManager(fname);
             obj.dataSetManager = mpa.h5.matlab.DataSetManager(fname);
             obj.entityMap = entityMap;
