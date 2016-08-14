@@ -3,6 +3,7 @@ classdef DataSetManager < mpa.h5.matlab.GroupManager
     properties(Access = private)
         elementCollections
         dataType
+        idColumn
     end
     
     methods
@@ -12,14 +13,16 @@ classdef DataSetManager < mpa.h5.matlab.GroupManager
         end
         
         function init(obj, schema)
+            obj.idColumn = schema.id.name;
             obj.elementCollections = schema.elementCollections;
             obj.dataType = obj.elementCollections.attributeType;
         end
         
         function entity = find(obj, entity)
+            group = entity.(obj.idColumn);
             
             fid = H5F.open(obj.fname, 'H5F_ACC_RDONLY', 'H5P_DEFAULT');
-            dset = H5D.open(fid, [entity.id '/' mpa.core.Constants.DATA_SET_NAME]);
+            dset = H5D.open(fid, [group '/' mpa.core.Constants.DATA_SET_NAME]);
             
             [types, size] = obj.getH5ComplexType();
             % Create the compound datatype for memory.
@@ -41,7 +44,7 @@ classdef DataSetManager < mpa.h5.matlab.GroupManager
         end
         
         function entity = save(obj, entity)
-            group = entity.id;
+            group = entity.(obj.idColumn);
             obj.createGroup(group);
             
             [types, size] = obj.getH5ComplexType();
@@ -122,6 +125,7 @@ classdef DataSetManager < mpa.h5.matlab.GroupManager
         function close(obj, ~)
             obj.elementCollections = [];
             obj.dataType = [];
+            obj.idColumn = [];
         end
         
     end

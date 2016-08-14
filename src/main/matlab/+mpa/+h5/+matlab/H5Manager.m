@@ -54,8 +54,8 @@ classdef H5Manager < handle
             schema = obj.entityMap(clazz);
             
             if ~ isempty(schema.id.field)
-                fieldInstance = mpa.fields.keyGenerator(entity, schema.id.field);
-                entity.id = fieldInstance.key;
+                fieldInstance = mpa.fields.keyGenerator(entity, schema.id);
+                entity.(schema.id.name) = fieldInstance.key;
             end
         end
         

@@ -36,12 +36,13 @@ classdef TableManager < handle
         
         function entity = find(obj, entity)
             obj.load(entity);
+            columns = obj.tableCache.Properties.VariableNames;
+            idColumn = columns{1};
             
-            if isempty(entity.id)
+            if isempty(entity.(idColumn))
                 id = max(obj.tableCache.id);
             end
             
-            columns = obj.tableCache.Properties.VariableNames;
             row = obj.tableCache.id == id;
             result = obj.tableCache(row, columns);
             
@@ -58,15 +59,18 @@ classdef TableManager < handle
             if ~ isempty(obj.tableCache)
                 counter = max(obj.tableCache.id);
             end
-            
-            if isempty(entity.id)
-                entity.id  = counter + 1;
-            end
             columns = obj.tableCache.Properties.VariableNames;
+            
+            idColumn = columns{1};
+            
+            if isempty(entity.(idColumn))
+                entity.(idColumn)  = counter + 1;
+            end
+            
             
             for i = 1 : numel(columns)
                 column = columns{i};
-                obj.rowCache{entity.id, i} = entity.(column);
+                obj.rowCache{entity.(idColumn), i} = entity.(column);
             end
             newTable = cell2table(obj.rowCache, 'VariableNames', columns);
             obj.tableCache = [obj.tableCache; newTable];

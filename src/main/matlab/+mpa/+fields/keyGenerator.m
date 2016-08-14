@@ -1,6 +1,6 @@
-function field = keyGenerator(entity, class)
+function field = keyGenerator(entity, id)
 
-geneartor = str2func(['@(entity)' class '.generate(entity)']);
-field = geneartor(entity);
+geneartor = str2func(['@(entity, name)' id.field '.generate(entity, name)']);
+field = geneartor(entity, id.name);
 end
 

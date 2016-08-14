@@ -2,6 +2,8 @@ classdef AttributeManager < mpa.h5.matlab.GroupManager
     
     properties(Access = private)
         basics
+        schema
+        idColumn
     end
     
     methods
@@ -12,11 +14,12 @@ classdef AttributeManager < mpa.h5.matlab.GroupManager
         
         
         function init(obj, schema)
+            obj.idColumn = schema.id.name;
             obj.basics = schema.basics;
         end
         
         function entity = find(obj, entity)
-            group = entity.id;
+            group = entity.(obj.idColumn);
             
             for basic = obj.basics
                 entity.(basic.name) = h5readatt(obj.fname, group, basic.name);
@@ -24,7 +27,7 @@ classdef AttributeManager < mpa.h5.matlab.GroupManager
         end
         
         function entity = save(obj, entity)
-            group = entity.id;
+            group = entity.(obj.idColumn);
             obj.createGroup(group);
             
             h5writeatt(obj.fname, group, 'id', group);
@@ -36,6 +39,7 @@ classdef AttributeManager < mpa.h5.matlab.GroupManager
         
         function close(obj, ~)
             obj.basics = [];
+            obj.idColumn = [];
         end
         
     end

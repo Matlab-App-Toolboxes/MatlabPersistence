@@ -38,7 +38,7 @@ classdef DateTime < handle
     
     methods(Static)
         
-        function dateTimeId = generate(entity)
+        function dateTimeId = generate(entity, name)
             
             if nargin < 3
                 uuid = com.fasterxml.uuid.Generators.timeBasedGenerator().generate();
@@ -47,7 +47,7 @@ classdef DateTime < handle
             
             clazz = mpa.core.metamodel.EntitySchema.getClazz(entity);
             prefix = matlab.lang.makeValidName(clazz);
-            value = entity.id;
+            value = entity.(name);
             
             if isempty(value)
                 value = 'id';
