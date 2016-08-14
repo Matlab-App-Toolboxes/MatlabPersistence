@@ -39,15 +39,16 @@ classdef EntityManager < handle
             
             if ~ isempty(basics)
                 manager = obj.provider.getManager(basics);
-                manager.save(entity);
+                entity = manager.save(entity);
                 manager.close();
             end
             
             if ~ isempty(elementCollection)
                 manager = obj.provider.getManager(elementCollection);
-                manager.save(entity);
+                entity = manager.save(entity);
                 manager.close();
             end
+            obj.provider.close();
         end
         
         function merge(obj, entity)
@@ -61,28 +62,20 @@ classdef EntityManager < handle
     
     methods(Access = private)
         
-        function clazz = getClazz(obj, entityInstance)
-            clazz = class(entityInstance);
-            
-            if isstruct(entityInstance)
-                clazz = entityInstance.class;
-            end
-        end
-        
         function b = getBasics(obj, entityInstance)
-            clazz = obj.getClazz(entityInstance);
+            clazz = mpa.util.getClazz(entityInstance);
             e = obj.persistenceUnit.entitySchemaMap(clazz);
             b = e.basics;
         end
         
         function c = getElementCollections(obj, entityInstance)
-            clazz = obj.getClazz(entityInstance);
+            clazz =  mpa.util.getClazz(entityInstance);
             e = obj.persistenceUnit.entitySchemaMap(clazz);
             c = e.elementCollections;
         end
         
         function entityInstance = prePersist(obj, entityInstance)
-            clazz = obj.getClazz(entityInstance);
+            clazz =  mpa.util.getClazz(entityInstance);
             schema = obj.persistenceUnit.entitySchemaMap(clazz);
             
             if ~ isempty(schema.id.field)

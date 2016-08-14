@@ -7,9 +7,13 @@ classdef DataSetManager < mpa.h5.matlab.GroupManager
     
     methods
         
-        function obj = DataSetManager(fname, elementCollections)
+        function obj = DataSetManager(fname)
             obj@ mpa.h5.matlab.GroupManager(fname);
-            obj.elementCollections = elementCollections;
+        end
+        
+        function init(obj, schema)
+            obj.elementCollections = schema.elementCollections;
+            obj.dataType = obj.elementCollections.attributeType;
         end
         
         function entity = find(obj, entity)
@@ -36,7 +40,7 @@ classdef DataSetManager < mpa.h5.matlab.GroupManager
             
         end
         
-        function save(obj, entity)
+        function entity = save(obj, entity)
             group = entity.id;
             obj.createGroup(group);
             
@@ -114,6 +118,12 @@ classdef DataSetManager < mpa.h5.matlab.GroupManager
             end
             
         end
+        
+        function close(obj, ~)
+            obj.elementCollections = [];
+            obj.dataType = [];
+        end
+        
     end
 end
 
