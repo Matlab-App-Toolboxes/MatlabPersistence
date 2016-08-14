@@ -5,7 +5,8 @@ classdef CoreTest < matlab.unittest.TestCase
     end
     
     properties(Constant)
-        TEST_FILE = 'test.h5';
+        TEST_H5_FILE = 'test.h5';
+        TEST_MAT_TABLE_FILE = 'test-table.mat'
     end
     
     methods(TestClassSetup)
@@ -72,7 +73,7 @@ classdef CoreTest < matlab.unittest.TestCase
             
         end
         
-        function testEntityManager(obj)
+        function testH5Provider(obj)
             em = mpa.factory.createEntityManager('patch-rig');
             obj.verifyNotEmpty(em);
             
@@ -83,12 +84,13 @@ classdef CoreTest < matlab.unittest.TestCase
             expected.int = 1;
             expected.id = 'id';
             expected.class = 'entity.Basic';
+            
             em.persist(expected);
             
             pause(1);
             em.persist(expected);
             
-            fname = [obj.fixture filesep obj.TEST_FILE];
+            fname = [obj.fixture filesep obj.TEST_H5_FILE];
             info = h5info(fname, '/entity_Basic');
             
             obj.verifyNumElements(info.Groups, 2);
@@ -131,6 +133,33 @@ classdef CoreTest < matlab.unittest.TestCase
             obj.verifyEqual(actual.doubles, expected.doubles);
             obj.verifyEqual(actual.ints, expected.ints);
             obj.verifyEqual(actual.id, group);
+            
+            em.close();
+        end
+        
+        function testSimpleProvider(obj)
+            em = mpa.factory.createEntityManager('patch-rig-log');
+            obj.verifyNotEmpty(em);
+            
+            expected = struct();
+            expected.string = 'test-string';
+            expected.double = 1e-12;
+            expected.integer = 1;
+            expected.class = 'entity.TestTable';
+            expected.doubleArray = 1 : 5;
+            expected.stringArray = {'one', 'twu', 'three'};
+            expected.id = [];
+            em.persist(expected);
+            
+            query = struct('class', 'entity.TestTable', 'id', []);
+            actual = em.find(query);
+            obj.verifyEqual(actual.id, 1);
+            obj.verifyEqual(actual.string{1}, expected.string);
+            obj.verifyEqual(actual.double, expected.double);
+            obj.verifyEqual(actual.integer, expected.integer);
+            obj.verifyEqual(actual.integer, expected.integer);
+            obj.verifyEqual(actual.doubleArray, expected.doubleArray);
+            obj.verifyEqual(actual.stringArray, expected.stringArray);
             
             em.close();
         end

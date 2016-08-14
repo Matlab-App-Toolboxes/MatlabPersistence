@@ -2,6 +2,22 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://mpa.io/orm/schema orm-schema.xsd ">
 	<description></description>
+
+	<entity class="entity.TestTable" name="table">
+		<description>Test Table structure</description>
+		<attributes>
+			<id name="id" attribute-type="int"></id>
+			<basic name="string" attribute-type="string" />
+			<basic name="integer" attribute-type="int" />
+			<basic name="double" attribute-type="double" />
+			<element-collection name="doubleArray"
+				attribute-type="double" />
+			<element-collection name="stringArray"
+				attribute-type="string" />
+		</attributes>
+	</entity>
+
+
 	<entity class="entity.Basic" name="basic">
 		<attributes>
 			<id name="id" attribute-type="string">
