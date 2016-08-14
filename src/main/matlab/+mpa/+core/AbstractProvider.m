@@ -34,7 +34,7 @@ classdef AbstractProvider < handle
     methods(Abstract)
         createDefintion(obj)
         createEntites(obj, entityMap)
-        getManager(obj, types)
+        createEntityManager(obj)
         close(obj)
     end
 end

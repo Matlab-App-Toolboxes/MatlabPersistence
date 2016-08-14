@@ -1,5 +1,9 @@
 classdef H5MatlabProvider < mpa.core.AbstractProvider
     
+    properties
+        entityMap
+    end
+    
     methods
         
         function createDefintion(obj)
@@ -10,26 +14,27 @@ classdef H5MatlabProvider < mpa.core.AbstractProvider
         end
         
         function createEntites(obj, entityMap)
-            
             entities = entityMap.keys();
             manager = mpa.h5.matlab.GroupManager(obj.localPath);
+            
             for i = 1 : numel(entities)
                 e = entities{i};
                 group = matlab.lang.makeValidName(e);
                 manager.createGroup(['/' group]);
             end
+            obj.entityMap = entityMap;
         end
         
-        function manager = getManager(obj, types)
+        function manager = createEntityManager(obj)
             
             if ~ exist(obj.localPath, 'file')
                 error('Matlab:persistence:filenotfound', 'h5 file not found');
             end
-            manager = mpa.h5.matlab.createManager(obj.localPath, types);
+            manager = mpa.h5.matlab.EntityManager(obj.localPath, obj.entityMap);
         end
         
         function close(obj)
-            % TODO synchronize to server
+            % TODO synchronize with server
         end
     end
     
