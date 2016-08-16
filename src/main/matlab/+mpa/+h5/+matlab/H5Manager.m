@@ -60,7 +60,7 @@ classdef H5Manager < handle
         end
         
         
-        function persist(obj, entity)
+        function entity = persist(obj, entity)
             obj.init(entity);
             entity = obj.prePersist(entity);
             
