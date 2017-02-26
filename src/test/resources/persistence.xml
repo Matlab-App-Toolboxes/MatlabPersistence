@@ -11,7 +11,7 @@
 		<class>entity.Collections</class>
 		<properties>
 			<property name="local-path"
-				value="D:\project\repo\github\matlab-persistence\fixtures\test.h5" />
+				value="fixtures\test.h5" />
 			<property name="remote-path" value="" />
 			<property name="create-mode" value="true" />
 			<property name="use-cache" value="false" />
@@ -23,7 +23,7 @@
 		<class>entity.TestTable</class>
 		<properties>
 			<property name="local-path"
-				value="D:\project\repo\github\matlab-persistence\fixtures\" />
+				value="fixtures\" />
 			<property name="remote-path" value="" />
 			<property name="create-mode" value="true" />
 			<property name="use-cache" value="false" />
