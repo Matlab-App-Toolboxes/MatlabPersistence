@@ -8,6 +8,6 @@ packageRoot = fileparts(mfilename('fullpath'));
 rootPath = fileparts(fileparts(fileparts(fileparts(packageRoot))));
 javaaddpath(fullfile(rootPath, 'lib', 'mpa-jutil-0.0.1-SNAPSHOT.jar'));
 javaaddpath(fullfile(rootPath, 'lib', 'java-uuid-generator-3.1.4.jar'));
-
+javaaddpath(fullfile(rootPath, 'lib', 'sqlite-jdbc-3.20.0.jar'));
 end
 

@@ -17,6 +17,7 @@ classdef EntitySchema < handle
         postLoad
         id
         dataManager
+        name
     end
     
     methods
@@ -48,6 +49,10 @@ classdef EntitySchema < handle
         
         function dataManager = get.dataManager(obj)
             dataManager = char(obj.jEntity.getDataManager().get(0).getClazz());
+        end
+
+        function name = get.name(obj)
+            name = obj.jEntity.getName();
         end
     end
     

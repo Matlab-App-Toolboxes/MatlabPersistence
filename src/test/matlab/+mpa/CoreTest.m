@@ -42,7 +42,7 @@ classdef CoreTest < matlab.unittest.TestCase
             obj.verifyNotEmpty(unit);
             obj.verifyEqual(unit.name, 'patch-rig');
             obj.verifyEqual(unit.path, path);
-            obj.verifyEqual(class(unit.provider), 'mpa.h5.H5MatlabProvider');
+            obj.verifyEqual(class(unit.createProvider()), 'mpa.h5.H5MatlabProvider');
             obj.verifyEqual(sort(unit.propertyMap.keys), sort(properties));
             actual = unit.propertyMap(entities);
             obj.verifyEqual(sort(actual.keys), sort(entitiesClazz));

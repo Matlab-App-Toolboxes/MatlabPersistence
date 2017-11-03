@@ -1,0 +1,237 @@
+1..0
+
+1..3
+ok 1 - mpa.CoreTest/testGetPersistenceUnit
+ok 2 - mpa.CoreTest/testH5Provider
+ok 3 - mpa.CoreTest/testSimpleProvider
+
+1..3
+not ok 1 - mpa.CoreTest/testGetPersistenceUnit
+# ================================================================================
+# Verification failed in mpa.CoreTest/testGetPersistenceUnit.
+# 
+#     ---------------------
+#     Framework Diagnostic:
+#     ---------------------
+#     verifyEqual failed.
+#     --> The character arrays are not equal.
+#     
+#     Actual char:
+#         double
+#     Expected char:
+#         mpa.h5.H5MatlabProvider
+# 
+#     ------------------
+#     Stack Information:
+#     ------------------
+#     In C:\Users\narayas2\Documents\MATLAB\projects\MatlabPersistence\src\test\matlab\+mpa\CoreTest.m (CoreTest.testGetPersistenceUnit) at 45
+# ================================================================================
+# 
+not ok 2 - mpa.CoreTest/testH5Provider
+# ================================================================================
+# Error occurred in mpa.CoreTest/testH5Provider and it did not run to completion.
+# 
+#     ---------
+#     Error ID:
+#     ---------
+#     'MATLAB:TooManyOutputs'
+# 
+#     --------------
+#     Error Details:
+#     --------------
+#     Error using mpa.core.PersistenceUnit/createProvider
+#     Too many output arguments.
+#     
+#     Error in mpa.factory.createEntityManager (line 12)
+#         obj = initializer.getPersistenceUnit(unitName).createProvider().createEntityManager();
+#     
+#     Error in mpa.CoreTest/testH5Provider (line 77)
+#                 em = mpa.factory.createEntityManager('patch-rig');
+# ================================================================================
+# 
+not ok 3 - mpa.CoreTest/testSimpleProvider
+# ================================================================================
+# Error occurred in mpa.CoreTest/testSimpleProvider and it did not run to completion.
+# 
+#     ---------
+#     Error ID:
+#     ---------
+#     'MATLAB:TooManyOutputs'
+# 
+#     --------------
+#     Error Details:
+#     --------------
+#     Error using mpa.core.PersistenceUnit/createProvider
+#     Too many output arguments.
+#     
+#     Error in mpa.factory.createEntityManager (line 12)
+#         obj = initializer.getPersistenceUnit(unitName).createProvider().createEntityManager();
+#     
+#     Error in mpa.CoreTest/testSimpleProvider (line 141)
+#                 em = mpa.factory.createEntityManager('patch-rig-log');
+# ================================================================================
+# 
+
+1..3
+not ok 1 - mpa.CoreTest/testGetPersistenceUnit
+# ================================================================================
+# Verification failed in mpa.CoreTest/testGetPersistenceUnit.
+# 
+#     ---------------------
+#     Framework Diagnostic:
+#     ---------------------
+#     verifyEqual failed.
+#     --> The character arrays are not equal.
+#     
+#     Actual char:
+#         double
+#     Expected char:
+#         mpa.h5.H5MatlabProvider
+# 
+#     ------------------
+#     Stack Information:
+#     ------------------
+#     In C:\Users\narayas2\Documents\MATLAB\projects\MatlabPersistence\src\test\matlab\+mpa\CoreTest.m (CoreTest.testGetPersistenceUnit) at 45
+# ================================================================================
+# 
+not ok 2 - mpa.CoreTest/testH5Provider
+# ================================================================================
+# Error occurred in mpa.CoreTest/testH5Provider and it did not run to completion.
+# 
+#     ---------
+#     Error ID:
+#     ---------
+#     'MATLAB:noSuchMethodOrField'
+# 
+#     --------------
+#     Error Details:
+#     --------------
+#     No appropriate method, property, or field 'createEntityManager' for class 'mpa.core.PersistenceUnit'.
+#     
+#     Error in mpa.factory.createEntityManager (line 12)
+#         obj = initializer.getPersistenceUnit(unitName).createProvider().createEntityManager();
+#     
+#     Error in mpa.CoreTest/testH5Provider (line 77)
+#                 em = mpa.factory.createEntityManager('patch-rig');
+# ================================================================================
+# 
+not ok 3 - mpa.CoreTest/testSimpleProvider
+# ================================================================================
+# Error occurred in mpa.CoreTest/testSimpleProvider and it did not run to completion.
+# 
+#     ---------
+#     Error ID:
+#     ---------
+#     'MATLAB:noSuchMethodOrField'
+# 
+#     --------------
+#     Error Details:
+#     --------------
+#     No appropriate method, property, or field 'createEntityManager' for class 'mpa.core.PersistenceUnit'.
+#     
+#     Error in mpa.factory.createEntityManager (line 12)
+#         obj = initializer.getPersistenceUnit(unitName).createProvider().createEntityManager();
+#     
+#     Error in mpa.CoreTest/testSimpleProvider (line 141)
+#                 em = mpa.factory.createEntityManager('patch-rig-log');
+# ================================================================================
+# 
+
+1..3
+not ok 1 - mpa.CoreTest/testGetPersistenceUnit
+# ================================================================================
+# Error occurred in mpa.CoreTest/testGetPersistenceUnit and it did not run to completion.
+# 
+#     ---------
+#     Error ID:
+#     ---------
+#     'MATLAB:noSuchMethodOrField'
+# 
+#     --------------
+#     Error Details:
+#     --------------
+#     No appropriate method, property, or field 'provider' for class 'mpa.core.PersistenceUnit'.
+#     
+#     Error in mpa.CoreTest/testGetPersistenceUnit (line 45)
+#                 obj.verifyEqual(class(unit.provider), 'mpa.h5.H5MatlabProvider');
+# ================================================================================
+# 
+ok 2 - mpa.CoreTest/testH5Provider
+ok 3 - mpa.CoreTest/testSimpleProvider
+
+1..3
+ok 1 - mpa.CoreTest/testGetPersistenceUnit
+ok 2 - mpa.CoreTest/testH5Provider
+ok 3 - mpa.CoreTest/testSimpleProvider
+
+1..3
+ok 1 - mpa.CoreTest/testGetPersistenceUnit
+ok 2 - mpa.CoreTest/testH5Provider
+
+1..3
+ok 1 - mpa.CoreTest/testGetPersistenceUnit
+not ok 2 - mpa.CoreTest/testH5Provider
+# ================================================================================
+# Error occurred in mpa.CoreTest/testH5Provider and it did not run to completion.
+# 
+#     ---------
+#     Error ID:
+#     ---------
+#     'MATLAB:refClearedVar'
+# 
+#     --------------
+#     Error Details:
+#     --------------
+#     Reference to a cleared variable initializer.
+#     
+#     Error in mpa.factory.createEntityManager/destroy (line 21)
+#             delete(initializer);
+#     
+#     Error in mpa.factory.createEntityManager>@()destroy() (line 13)
+#         obj.closeInitializer = @()destroy();
+#     
+#     Error in mpa.h5.matlab.H5Manager/close (line 83)
+#                 obj.closeInitializer();
+#     
+#     Error in mpa.CoreTest/testH5Provider (line 137)
+#                 em.close();
+# ================================================================================
+# 
+not ok 3 - mpa.CoreTest/testSimpleProvider
+# ================================================================================
+# Error occurred in mpa.CoreTest/testSimpleProvider and it did not run to completion.
+# 
+#     ---------
+#     Error ID:
+#     ---------
+#     'MATLAB:refClearedVar'
+# 
+#     --------------
+#     Error Details:
+#     --------------
+#     Reference to a cleared variable initializer.
+#     
+#     Error in mpa.factory.createEntityManager/destroy (line 21)
+#             delete(initializer);
+#     
+#     Error in mpa.factory.createEntityManager>@()destroy() (line 13)
+#         obj.closeInitializer = @()destroy();
+#     
+#     Error in mpa.mat.TableManager/close (line 92)
+#                 obj.closeInitializer();
+#     
+#     Error in mpa.CoreTest/testSimpleProvider (line 166)
+#                 em.close();
+# ================================================================================
+# 
+
+1..3
+ok 1 - mpa.CoreTest/testGetPersistenceUnit
+ok 2 - mpa.CoreTest/testH5Provider
+ok 3 - mpa.CoreTest/testSimpleProvider
+
+1..3
+ok 1 - mpa.CoreTest/testGetPersistenceUnit
+ok 2 - mpa.CoreTest/testH5Provider
+ok 3 - mpa.CoreTest/testSimpleProvider
+

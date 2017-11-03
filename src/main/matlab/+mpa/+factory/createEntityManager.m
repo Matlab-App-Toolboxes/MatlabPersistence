@@ -9,15 +9,14 @@ try
     if isempty(initializer)
         initializer = mpa.core.Initializer(path);
     end
-    unit = initializer.getPersistenceUnit(unitName);
-    obj = unit.provider.createEntityManager();
-    obj.closeInitializer = @()destroy();
+    obj = initializer.getPersistenceUnit(unitName).createProvider().createEntityManager();
 catch exception
     destroy();
     rethrow(exception);
 end
 
     function destroy()
-        clear initializer;
+        delete(initializer);
+        initializer = [];
     end
 end

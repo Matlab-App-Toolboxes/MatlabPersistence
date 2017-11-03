@@ -25,15 +25,15 @@ classdef AbstractProvider < handle
             end
             
             if obj.shouldCreateEntites
-                entityMap = map(mpa.core.PersistenceUnit.ENTITIES);
-                obj.createEntites(entityMap);
+                entitySchemaMap = map(mpa.core.PersistenceUnit.ENTITIES);
+                obj.createEntites(entitySchemaMap);
             end
         end
     end
     
     methods(Abstract)
         createDefintion(obj)
-        createEntites(obj, entityMap)
+        createEntites(obj, entitySchemaMap)
         createEntityManager(obj)
         close(obj)
     end

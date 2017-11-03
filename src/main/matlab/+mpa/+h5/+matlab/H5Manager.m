@@ -8,10 +8,6 @@ classdef H5Manager < handle
         hasBasics
     end
     
-    properties
-        closeInitializer
-    end
-    
     methods
         
         function obj = H5Manager(fname, entityMap)
@@ -80,11 +76,7 @@ classdef H5Manager < handle
         end
         
         function close(obj)
-            obj.closeInitializer();
-        end
-        
-        function delete(obj)
-            obj.close();
+            % do nothing
         end
         
     end

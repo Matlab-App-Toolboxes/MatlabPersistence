@@ -8,7 +8,6 @@ classdef PersistenceUnit < handle
         name
         entitySchemaMap
         propertyMap
-        provider
         path
     end
     
@@ -27,16 +26,14 @@ classdef PersistenceUnit < handle
             obj.path = path;
             obj.populateEntityMap();
             obj.populatePropertyMap();
-            obj.createProvider();
         end
         
-        function createProvider(obj)
+        function provider = createProvider(obj)
             clazz = obj.jPersistenceUnit.getProvider();
             constructor = str2func(char(clazz));
-            obj.provider = constructor();
-            obj.provider.init(obj.propertyMap);
+            provider = constructor();
+            provider.init(obj.propertyMap);
         end
-        
     end
     
     methods(Access = private)
